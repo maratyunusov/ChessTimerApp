@@ -8,7 +8,7 @@
 import UIKit
 
 /// UIView, watch side for player
-final class PlayerSideView: UIView {
+final class MainPlayerSideView: UIView {
     enum TrasformView {
         case normal
         case left
@@ -41,6 +41,26 @@ final class PlayerSideView: UIView {
         return timePicker
     }()
     
+    private let stackViewChoosesButtons: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private let saveButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("SAVE", for: .normal)
+        return button
+    }()
+    
+    private let cancelButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("CANCEL", for: .normal)
+        return button
+    }()
+    
     init(transformSideView: TrasformView?) {
         super.init(frame: .zero)
         
@@ -65,18 +85,36 @@ final class PlayerSideView: UIView {
         addSubview(timerLabel)
         addSubview(setupTimeButton)
         addSubview(timerPickerView)
+        addSubview(stackViewChoosesButtons)
         
         timerPickerView.isHidden = true
         
         addConstraints()
+        setupStackView()
+        
         setFontForLabel(label: timerLabel, maxFontSize: 100, minFontSize: 5, maxLines: 2)
         setupTimeButton.addTarget(self, action: #selector(setupTime), for: .touchUpInside)
+        saveButton.addTarget( self, action: #selector(saveTapped), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
+        
     }
     
     @objc private func setupTime() {
-        timerPickerView.isHidden = false
         timerLabel.isHidden = true
+        timerPickerView.isHidden = false
+        stackViewChoosesButtons.isHidden = false
         setupTimeButton.isHidden = true
+    }
+    
+    @objc private func saveTapped() {
+        
+    }
+    
+    @objc private func cancelTapped() {
+        setupTimeButton.isHidden = false
+        timerLabel.isHidden = false
+        timerPickerView.isHidden = true
+        stackViewChoosesButtons.isHidden = true
     }
     
     private func addConstraints() {
@@ -94,12 +132,23 @@ final class PlayerSideView: UIView {
             setupTimeButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 20),
             setupTimeButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             setupTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/12),
-            setupTimeButton.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1/12)
+            setupTimeButton.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1/12),
+            
+            stackViewChoosesButtons.topAnchor.constraint(equalTo: timerPickerView.bottomAnchor, constant: 10),
+            stackViewChoosesButtons.leftAnchor.constraint(equalTo: leftAnchor, constant: 30),
+            stackViewChoosesButtons.rightAnchor.constraint(equalTo: rightAnchor, constant: -30),
+            stackViewChoosesButtons.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30)
         ])
+    }
+    
+    private func setupStackView() {
+        stackViewChoosesButtons.isHidden = true
+        stackViewChoosesButtons.addArrangedSubview(saveButton)
+        stackViewChoosesButtons.addArrangedSubview(cancelButton)
     }
 }
 
-extension PlayerSideView {
+extension MainPlayerSideView {
     
     /// Dynamic text font size in label
     private func setFontForLabel(label:UILabel, maxFontSize:CGFloat, minFontSize:CGFloat, maxLines:Int) {

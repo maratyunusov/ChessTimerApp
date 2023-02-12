@@ -28,6 +28,9 @@ final class TimerSetupView: UIPickerView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        timerPickerView.subviews.forEach { view in
+            view.backgroundColor = .clear
+        }
     }
 }
 
@@ -37,8 +40,10 @@ extension TimerSetupView: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-
+        
         return 10
     }
+    
+    
 }
 

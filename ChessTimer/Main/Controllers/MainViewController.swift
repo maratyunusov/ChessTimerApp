@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol MainViewControllerProtocol: AnyObject {
+    
+}
+
 /// Main view controller
 final class MainViewController: UIViewController {
     enum PlayerSideColor {
@@ -22,13 +26,13 @@ final class MainViewController: UIViewController {
         return stackView
     }()
     
-    private let firstPlayerSideView: PlayerSideView = {
-        let sideView = PlayerSideView(transformSideView: .reverse)
+    private let firstPlayerSideView: MainPlayerSideView = {
+        let sideView = MainPlayerSideView(transformSideView: .reverse)
         return sideView
     }()
     
-    private let secondPlayerSideView: PlayerSideView = {
-        let sideView = PlayerSideView(transformSideView: .normal)
+    private let secondPlayerSideView: MainPlayerSideView = {
+        let sideView = MainPlayerSideView(transformSideView: .normal)
         return sideView
     }()
 
@@ -37,7 +41,7 @@ final class MainViewController: UIViewController {
         view.addSubview(mainStackView)
         
         addConstraints()
-        changePlayerSideColor(style: .style1)
+        changePlayerSideColor(style: .classic)
     }
     
     private func addConstraints() {
