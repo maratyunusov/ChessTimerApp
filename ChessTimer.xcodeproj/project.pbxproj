@@ -9,19 +9,23 @@
 /* Begin PBXBuildFile section */
 		C0F387432996498C00EF5B1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387422996498C00EF5B1E /* AppDelegate.swift */; };
 		C0F387452996498C00EF5B1E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387442996498C00EF5B1E /* SceneDelegate.swift */; };
-		C0F387472996498C00EF5B1E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387462996498C00EF5B1E /* ViewController.swift */; };
+		C0F387472996498C00EF5B1E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387462996498C00EF5B1E /* MainViewController.swift */; };
 		C0F3874C2996498E00EF5B1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0F3874B2996498E00EF5B1E /* Assets.xcassets */; };
 		C0F3874F2996498E00EF5B1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0F3874D2996498E00EF5B1E /* LaunchScreen.storyboard */; };
+		C0F3875D2997DC1500EF5B1E /* PlayerSideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F3875C2997DC1500EF5B1E /* PlayerSideView.swift */; };
+		C0F3875F29981F2100EF5B1E /* TimerSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F3875E29981F2100EF5B1E /* TimerSetupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C0F3873F2996498C00EF5B1E /* ChessTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0F387422996498C00EF5B1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F387442996498C00EF5B1E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C0F387462996498C00EF5B1E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C0F387462996498C00EF5B1E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C0F3874B2996498E00EF5B1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0F3874E2996498E00EF5B1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0F387502996498E00EF5B1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0F3875C2997DC1500EF5B1E /* PlayerSideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSideView.swift; sourceTree = "<group>"; };
+		C0F3875E29981F2100EF5B1E /* TimerSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSetupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,64 @@
 		C0F387412996498C00EF5B1E /* ChessTimer */ = {
 			isa = PBXGroup;
 			children = (
-				C0F387422996498C00EF5B1E /* AppDelegate.swift */,
-				C0F387442996498C00EF5B1E /* SceneDelegate.swift */,
-				C0F387462996498C00EF5B1E /* ViewController.swift */,
-				C0F3874B2996498E00EF5B1E /* Assets.xcassets */,
-				C0F3874D2996498E00EF5B1E /* LaunchScreen.storyboard */,
+				C0F387562997D91400EF5B1E /* Resources */,
+				C0F387582997D9DA00EF5B1E /* Models */,
+				C0F387572997D99D00EF5B1E /* Views */,
+				C0F387592997D9F100EF5B1E /* Presenters */,
+				C0F3875A2997DA1E00EF5B1E /* Controllers */,
 				C0F387502996498E00EF5B1E /* Info.plist */,
 			);
 			path = ChessTimer;
+			sourceTree = "<group>";
+		};
+		C0F387562997D91400EF5B1E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C0F387422996498C00EF5B1E /* AppDelegate.swift */,
+				C0F387442996498C00EF5B1E /* SceneDelegate.swift */,
+				C0F3874B2996498E00EF5B1E /* Assets.xcassets */,
+				C0F3874D2996498E00EF5B1E /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C0F387572997D99D00EF5B1E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C0F3875E29981F2100EF5B1E /* TimerSetupView.swift */,
+				C0F3875B2997DBD600EF5B1E /* MainViews */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C0F387582997D9DA00EF5B1E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C0F387592997D9F100EF5B1E /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		C0F3875A2997DA1E00EF5B1E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C0F387462996498C00EF5B1E /* MainViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C0F3875B2997DBD600EF5B1E /* MainViews */ = {
+			isa = PBXGroup;
+			children = (
+				C0F3875C2997DC1500EF5B1E /* PlayerSideView.swift */,
+			);
+			path = MainViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,8 +188,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0F387472996498C00EF5B1E /* ViewController.swift in Sources */,
+				C0F3875D2997DC1500EF5B1E /* PlayerSideView.swift in Sources */,
+				C0F387472996498C00EF5B1E /* MainViewController.swift in Sources */,
 				C0F387432996498C00EF5B1E /* AppDelegate.swift in Sources */,
+				C0F3875F29981F2100EF5B1E /* TimerSetupView.swift in Sources */,
 				C0F387452996498C00EF5B1E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
