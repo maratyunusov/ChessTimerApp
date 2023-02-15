@@ -7,8 +7,12 @@
 
 import UIKit
 
+protocol MainPlayerSideViewProtocol: AnyObject {
+    
+}
+
 /// UIView, watch side for player
-final class MainPlayerSideView: UIView {
+final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     enum TrasformView {
         case normal
         case left
@@ -61,6 +65,14 @@ final class MainPlayerSideView: UIView {
         return button
     }()
     
+    private let titlePickerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     init(transformSideView: TrasformView?) {
         super.init(frame: .zero)
         
@@ -86,11 +98,14 @@ final class MainPlayerSideView: UIView {
         addSubview(setupTimeButton)
         addSubview(timerPickerView)
         addSubview(stackViewChoosesButtons)
+        addSubview(titlePickerStackView)
         
         timerPickerView.isHidden = true
+        titlePickerStackView.isHidden = true
         
         addConstraints()
         setupStackView()
+        setupTitlePickerStackView()
         
         setFontForLabel(label: timerLabel, maxFontSize: 100, minFontSize: 5, maxLines: 2)
         setupTimeButton.addTarget(self, action: #selector(setupTime), for: .touchUpInside)
@@ -104,10 +119,23 @@ final class MainPlayerSideView: UIView {
         timerPickerView.isHidden = false
         stackViewChoosesButtons.isHidden = false
         setupTimeButton.isHidden = true
+        titlePickerStackView.isHidden = false
     }
     
     @objc private func saveTapped() {
+        if Int(timerPickerView.timerTuple.0)! == 0 {
+            timerLabel.text = timerPickerView.timerTuple.1 + ":" + timerPickerView.timerTuple.2
+        } else if Int(timerPickerView.timerTuple.0)! < 10 {
+            timerLabel.text = timerPickerView.timerTuple.0 + ":" + timerPickerView.timerTuple.1 + ":" + timerPickerView.timerTuple.2
+        } else {
+            timerLabel.text = timerPickerView.timerTuple.0 + ":" + timerPickerView.timerTuple.1 + ":" + timerPickerView.timerTuple.2
+        }
         
+        setupTimeButton.isHidden = false
+        timerLabel.isHidden = false
+        timerPickerView.isHidden = true
+        stackViewChoosesButtons.isHidden = true
+        titlePickerStackView.isHidden = true
     }
     
     @objc private func cancelTapped() {
@@ -115,6 +143,7 @@ final class MainPlayerSideView: UIView {
         timerLabel.isHidden = false
         timerPickerView.isHidden = true
         stackViewChoosesButtons.isHidden = true
+        titlePickerStackView.isHidden = true
     }
     
     private func addConstraints() {
@@ -125,7 +154,7 @@ final class MainPlayerSideView: UIView {
             timerLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/4),
             
             timerPickerView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            timerPickerView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            timerPickerView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             timerPickerView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1),
             timerPickerView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/2),
             
@@ -137,7 +166,12 @@ final class MainPlayerSideView: UIView {
             stackViewChoosesButtons.topAnchor.constraint(equalTo: timerPickerView.bottomAnchor, constant: 10),
             stackViewChoosesButtons.leftAnchor.constraint(equalTo: leftAnchor, constant: 30),
             stackViewChoosesButtons.rightAnchor.constraint(equalTo: rightAnchor, constant: -30),
-            stackViewChoosesButtons.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30)
+            stackViewChoosesButtons.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30),
+            
+            titlePickerStackView.topAnchor.constraint(equalTo: timerPickerView.bottomAnchor, constant: -10),
+            titlePickerStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            titlePickerStackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1),
+            titlePickerStackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/15)
         ])
     }
     
@@ -145,6 +179,23 @@ final class MainPlayerSideView: UIView {
         stackViewChoosesButtons.isHidden = true
         stackViewChoosesButtons.addArrangedSubview(saveButton)
         stackViewChoosesButtons.addArrangedSubview(cancelButton)
+    }
+    
+    private func setupTitlePickerStackView() {
+        for (index, _) in (0...2).enumerated() {
+            let namePicker = UILabel()
+            if index == 0 {
+                namePicker.text = "hours"
+            } else if index == 1 {
+                namePicker.text = "minutes"
+            } else if index == 2 {
+                namePicker.text = "seconds"
+            }
+            namePicker.textAlignment = .center
+            namePicker.textColor = .white
+            namePicker.translatesAutoresizingMaskIntoConstraints = false
+            titlePickerStackView.addArrangedSubview(namePicker)
+        }
     }
 }
 

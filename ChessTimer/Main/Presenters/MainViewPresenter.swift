@@ -13,4 +13,9 @@ protocol MainViewPresenterProtocol: AnyObject {
 
 final class MainViewPresenter: MainViewPresenterProtocol {
     
+    weak var mainView: MainViewProtocol?
+    
+    init(mainView: MainViewProtocol?) {
+        self.mainView = mainView
+    }
 }
