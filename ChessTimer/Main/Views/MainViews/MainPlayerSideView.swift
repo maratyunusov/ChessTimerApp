@@ -94,11 +94,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        addSubview(timerLabel)
-        addSubview(setupTimeButton)
-        addSubview(timerPickerView)
-        addSubview(stackViewChoosesButtons)
-        addSubview(titlePickerStackView)
+        addSubviews(timerLabel, setupTimeButton, timerPickerView, stackViewChoosesButtons, titlePickerStackView)
         
         timerPickerView.isHidden = true
         titlePickerStackView.isHidden = true
@@ -108,6 +104,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         setupTitlePickerStackView()
         
         setFontForLabel(label: timerLabel, maxFontSize: 100, minFontSize: 5, maxLines: 2)
+        
         setupTimeButton.addTarget(self, action: #selector(setupTime), for: .touchUpInside)
         saveButton.addTarget( self, action: #selector(saveTapped), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
