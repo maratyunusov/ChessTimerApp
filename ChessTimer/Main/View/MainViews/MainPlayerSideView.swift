@@ -29,6 +29,15 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         return label
     }()
     
+    public let tapStartLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Tap to Start"
+        return label
+    }()
+    
     let setupTimeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
@@ -94,7 +103,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        addSubviews(timerLabel, setupTimeButton, timerPickerView, stackViewChoosesButtons, titlePickerStackView)
+        addSubviews(timerLabel, setupTimeButton, timerPickerView, stackViewChoosesButtons, titlePickerStackView, tapStartLabel)
         
         timerPickerView.isHidden = true
         titlePickerStackView.isHidden = true
@@ -104,6 +113,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         setupTitlePickerStackView()
         
         setFontForLabel(label: timerLabel, maxFontSize: 100, minFontSize: 5, maxLines: 2)
+        setFontForLabel(label: tapStartLabel, maxFontSize: 100, minFontSize: 5, maxLines: 1)
         
         setupTimeButton.addTarget(self, action: #selector(setupTime), for: .touchUpInside)
         saveButton.addTarget( self, action: #selector(saveTapped), for: .touchUpInside)
@@ -113,6 +123,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     
     @objc private func setupTime() {
         timerLabel.isHidden = true
+        tapStartLabel.isHidden = true
         timerPickerView.isHidden = false
         stackViewChoosesButtons.isHidden = false
         setupTimeButton.isHidden = true
@@ -130,6 +141,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         
         setupTimeButton.isHidden = false
         timerLabel.isHidden = false
+        tapStartLabel.isHidden = false
         timerPickerView.isHidden = true
         stackViewChoosesButtons.isHidden = true
         titlePickerStackView.isHidden = true
@@ -138,6 +150,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     @objc private func cancelTapped() {
         setupTimeButton.isHidden = false
         timerLabel.isHidden = false
+        tapStartLabel.isHidden = false
         timerPickerView.isHidden = true
         stackViewChoosesButtons.isHidden = true
         titlePickerStackView.isHidden = true
@@ -149,6 +162,11 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
             timerLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             timerLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/2),
             timerLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/4),
+            
+            tapStartLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            tapStartLabel.bottomAnchor.constraint(equalTo: timerLabel.topAnchor, constant: -20),
+            tapStartLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/2),
+            tapStartLabel.heightAnchor.constraint(equalToConstant: 25),
             
             timerPickerView.centerXAnchor.constraint(equalTo: centerXAnchor),
             timerPickerView.topAnchor.constraint(equalTo: topAnchor, constant: 10),

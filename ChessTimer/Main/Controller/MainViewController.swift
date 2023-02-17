@@ -67,7 +67,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
                          )
         
         addConstraints()
-        changePlayerSideColor(style: .style1)
+        changePlayerSideColor(style: .classic)
         setupButtons()
         
         firstPlayerSideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(firstPlayerTap)))
@@ -82,21 +82,27 @@ final class MainViewController: UIViewController, MainViewProtocol {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         pauseButton.isHidden = true
-        settingButton.isHidden = true
+        settingButton.isHidden = false
         restartButton.isHidden = true
     }
     
     @objc private func tapPauseButton() {
         if isHiddenPauseButton == true {
             isHiddenPauseButton = false
+            firstPlayerSideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(firstPlayerTap)))
+            secondPlayerSideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(secondPlayerTap)))
         } else {
             isHiddenPauseButton = true
+            firstPlayerSideView.gestureRecognizers?.removeLast()
+            secondPlayerSideView.gestureRecognizers?.removeLast()
         }
         showExtraButton(state: isHiddenPauseButton)
     }
     
     @objc private func tapSettingButton() {
-        
+        let settingsVC = SettingsBuilder.build()
+        settingsVC.modalTransitionStyle = .flipHorizontal
+        present(settingsVC, animated: true)
     }
     
     @objc private func tapRestartButton() {
@@ -106,13 +112,23 @@ final class MainViewController: UIViewController, MainViewProtocol {
     @objc private func firstPlayerTap() {
         firstPlayerSideView.setupTimeButton.isHidden = true
         secondPlayerSideView.setupTimeButton.isHidden = true
+        firstPlayerSideView.tapStartLabel.isHidden = true
+        secondPlayerSideView.tapStartLabel.isHidden = true
         pauseButton.isHidden = false
+        settingButton.isHidden = true
+        restartButton.isHidden = true
+        isHiddenPauseButton = false
     }
     
     @objc private func secondPlayerTap() {
         firstPlayerSideView.setupTimeButton.isHidden = true
         secondPlayerSideView.setupTimeButton.isHidden = true
+        firstPlayerSideView.tapStartLabel.isHidden = true
+        secondPlayerSideView.tapStartLabel.isHidden = true
         pauseButton.isHidden = false
+        settingButton.isHidden = true
+        restartButton.isHidden = true
+        isHiddenPauseButton = false
     }
     
     private func addConstraints() {
@@ -145,8 +161,8 @@ final class MainViewController: UIViewController, MainViewProtocol {
     private func changePlayerSideColor(style: PlayerSideColor) {
         switch style {
         case .classic:
-            firstPlayerSideView.backgroundColor = .systemGray5
-            secondPlayerSideView.backgroundColor = .systemGray6
+            firstPlayerSideView.backgroundColor = .tabBarItemLight
+            secondPlayerSideView.backgroundColor = .tabBarItemAccent
         case .style1:
             firstPlayerSideView.backgroundColor = .systemRed
             secondPlayerSideView.backgroundColor = .systemBlue
@@ -156,7 +172,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
     private func setupButtons() {
         //Pause Button
         pauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-        pauseButton.tintColor = .systemGray2
+        pauseButton.tintColor = .tabBarItemAccent
         pauseButton.imageView?.contentMode = .scaleToFill
         pauseButton.imageEdgeInsets = UIEdgeInsets(top: pauseButton.frame.width / 1.5,
                                                    left: pauseButton.frame.width / 1.5,
@@ -170,7 +186,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
         
         //Setting Button
         settingButton.setImage(UIImage(systemName: "gear"), for: .normal)
-        settingButton.tintColor = .systemGray2
+        settingButton.tintColor = .tabBarItemAccent
         settingButton.imageView?.contentMode = .scaleToFill
         settingButton.imageEdgeInsets = UIEdgeInsets(top: settingButton.frame.width / 1.2,
                                                      left: settingButton.frame.width / 1.2,
@@ -184,7 +200,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
         
         //Restart Button
         restartButton.setImage(UIImage(systemName: "gobackward"), for: .normal)
-        restartButton.tintColor = .systemGray2
+        restartButton.tintColor = .tabBarItemAccent
         restartButton.imageView?.contentMode = .scaleToFill
         restartButton.imageEdgeInsets = UIEdgeInsets(top: restartButton.frame.width / 1.2,
                                                      left: restartButton.frame.width / 1.2,
