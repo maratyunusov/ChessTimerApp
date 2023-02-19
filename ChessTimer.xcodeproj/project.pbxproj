@@ -14,6 +14,7 @@
 		C073C319299F5AB200E0A2C2 /* SettingsTabBarContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C318299F5AB200E0A2C2 /* SettingsTabBarContoller.swift */; };
 		C073C31B299F5C9000E0A2C2 /* GameModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C31A299F5C9000E0A2C2 /* GameModeViewController.swift */; };
 		C073C31D299F5E1A00E0A2C2 /* BackgroundColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C31C299F5E1A00E0A2C2 /* BackgroundColorViewController.swift */; };
+		C073C31F29A2865100E0A2C2 /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C31E29A2865100E0A2C2 /* CountdownTimer.swift */; };
 		C0F387432996498C00EF5B1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387422996498C00EF5B1E /* AppDelegate.swift */; };
 		C0F387452996498C00EF5B1E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387442996498C00EF5B1E /* SceneDelegate.swift */; };
 		C0F387472996498C00EF5B1E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387462996498C00EF5B1E /* MainViewController.swift */; };
@@ -32,6 +33,7 @@
 		C073C318299F5AB200E0A2C2 /* SettingsTabBarContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabBarContoller.swift; sourceTree = "<group>"; };
 		C073C31A299F5C9000E0A2C2 /* GameModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModeViewController.swift; sourceTree = "<group>"; };
 		C073C31C299F5E1A00E0A2C2 /* BackgroundColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundColorViewController.swift; sourceTree = "<group>"; };
+		C073C31E29A2865100E0A2C2 /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
 		C0F3873F2996498C00EF5B1E /* ChessTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0F387422996498C00EF5B1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F387442996498C00EF5B1E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				C0F3874B2996498E00EF5B1E /* Assets.xcassets */,
 				C0F3874D2996498E00EF5B1E /* LaunchScreen.storyboard */,
 				C073C30C299E5CB100E0A2C2 /* Extenstions.swift */,
+				C073C31E29A2865100E0A2C2 /* CountdownTimer.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				C0713F83299D5C8700C11A92 /* MainBuilder.swift in Sources */,
 				C073C31B299F5C9000E0A2C2 /* GameModeViewController.swift in Sources */,
 				C0F3875D2997DC1500EF5B1E /* MainPlayerSideView.swift in Sources */,
+				C073C31F29A2865100E0A2C2 /* CountdownTimer.swift in Sources */,
 				C0F387472996498C00EF5B1E /* MainViewController.swift in Sources */,
 				C0F387612999717300EF5B1E /* MainViewPresenter.swift in Sources */,
 				C0713F81299D58F100C11A92 /* MainModel.swift in Sources */,
@@ -416,7 +420,9 @@
 				INFOPLIST_FILE = ChessTimer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -443,7 +449,9 @@
 				INFOPLIST_FILE = ChessTimer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

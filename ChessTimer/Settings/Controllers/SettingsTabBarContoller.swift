@@ -30,9 +30,7 @@ class SettingsTabBarController: UITabBarController {
                                       image: UIImage(systemName: "hare")),
                            generateVC(backgroundColorVC,
                                       title: "Style",
-                                      image: UIImage(systemName: "paintpalette"))
-        ]
-        
+                                      image: UIImage(systemName: "paintpalette"))]
     }
     
     private func generateVC(_ viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
@@ -53,8 +51,8 @@ class SettingsTabBarController: UITabBarController {
                                                           y: tabBar.bounds.minY - positionOnY,
                                                           width: width,
                                                           height: height),
-                                      cornerRadius: height / 2)
-        
+                                      cornerRadius: height / 2
+        )
         roundLayer.path = bezierPath.cgPath
         tabBar.layer.insertSublayer(roundLayer, at: 0)
         tabBar.itemWidth = width / 5

@@ -20,10 +20,26 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         case reverse
     }
     
-    private let timerLabel: UILabel = {
+    var delegate: MainViewProtocol?
+    
+    var time: Double = 300 {
+        didSet {
+            let hours = Int(time) / 3600
+            let minutes = Int(time) / 60 % 60
+            let seconds = Int(time) % 60
+            
+            if hours == 0 {
+                timerLabel.text = String(format:"%02i", minutes) + ":" + String(format:"%02i", seconds)
+            } else {
+                timerLabel.text = String(format:"%02i", hours) + ":" + String(format:"%02i", minutes) + ":" + String(format:"%02i", seconds)
+            }
+        }
+    }
+    
+    public let timerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "5:00"
+        label.text = "05:00"
         label.textColor = .white
         label.textAlignment = .center
         return label
@@ -48,7 +64,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         return button
     }()
     
-    private let timerPickerView: TimerSetupView = {
+    public let timerPickerView: TimerSetupView = {
         let timePicker = TimerSetupView()
         timePicker.translatesAutoresizingMaskIntoConstraints = false
         return timePicker
@@ -131,13 +147,10 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     }
     
     @objc private func saveTapped() {
-        if Int(timerPickerView.timerTuple.0)! == 0 {
-            timerLabel.text = timerPickerView.timerTuple.1 + ":" + timerPickerView.timerTuple.2
-        } else if Int(timerPickerView.timerTuple.0)! < 10 {
-            timerLabel.text = timerPickerView.timerTuple.0 + ":" + timerPickerView.timerTuple.1 + ":" + timerPickerView.timerTuple.2
-        } else {
-            timerLabel.text = timerPickerView.timerTuple.0 + ":" + timerPickerView.timerTuple.1 + ":" + timerPickerView.timerTuple.2
-        }
+        let hours = Double(timerPickerView.timerTuple.0) ?? 0 
+        let minutes = Double(timerPickerView.timerTuple.1) ?? 0
+        let seconds = Double(timerPickerView.timerTuple.2) ?? 0
+        time = hours * 3600 + minutes * 60 + seconds * 60
         
         setupTimeButton.isHidden = false
         timerLabel.isHidden = false
@@ -145,6 +158,8 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         timerPickerView.isHidden = true
         stackViewChoosesButtons.isHidden = true
         titlePickerStackView.isHidden = true
+
+        delegate?.saveTimers()
     }
     
     @objc private func cancelTapped() {
@@ -176,7 +191,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
             setupTimeButton.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 20),
             setupTimeButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             setupTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/12),
-            setupTimeButton.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1/12),
+            setupTimeButton.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1/14),
             
             stackViewChoosesButtons.topAnchor.constraint(equalTo: timerPickerView.bottomAnchor, constant: 10),
             stackViewChoosesButtons.leftAnchor.constraint(equalTo: leftAnchor, constant: 30),

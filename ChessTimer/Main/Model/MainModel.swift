@@ -8,9 +8,9 @@
 import Foundation
 
 struct MainModel {
-    let hours: Int
-    let minutes: Int
-    let seconds: Int
+    var hours: Int
+    var minutes: Int
+    var seconds: Int
     
     var tupleTime: (String, String, String) {
         return (String(hours), String(minutes), String(seconds))

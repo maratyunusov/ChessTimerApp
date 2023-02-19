@@ -8,7 +8,9 @@
 import UIKit
 
 protocol MainViewProtocol: AnyObject {
-    
+    func saveTimers()
+    func didStartTimer()
+    func updateTimerPlayer(first: Double, second: Double)
 }
 
 /// Main view controller
@@ -20,6 +22,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
     
     var mainPresenter: MainViewPresenterProtocol?
     
+    var isTimerDidStart = false
     var isHiddenPauseButton = false
     
     private let mainStackView: UIStackView = {
@@ -58,8 +61,12 @@ final class MainViewController: UIViewController, MainViewProtocol {
         return button
     }()
 
+    //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        firstPlayerSideView.delegate = self
+        secondPlayerSideView.delegate = self
+        
         view.addSubviews(mainStackView,
                          settingButton,
                          restartButton,
@@ -78,23 +85,54 @@ final class MainViewController: UIViewController, MainViewProtocol {
         restartButton.addTarget(self, action: #selector(tapRestartButton), for: .touchUpInside)
     }
     
+    func didStartTimer() {
+        if !isTimerDidStart {
+            mainPresenter?.startTimerSecondPlayer()
+            isTimerDidStart = true
+            mainPresenter?.pauseTimerFirstPlayer()
+            firstPlayerSideView.isUserInteractionEnabled = true
+            secondPlayerSideView.isUserInteractionEnabled = false
+        } else {
+            mainPresenter?.pauseTimerSecondPlayer()
+            isTimerDidStart = false
+            mainPresenter?.startTimerFirstPlayer()
+            firstPlayerSideView.isUserInteractionEnabled = false
+            secondPlayerSideView.isUserInteractionEnabled = true
+        }
+    }
     
+    func saveTimers() {
+        mainPresenter?.setTime(firstPlayerTimer: firstPlayerSideView.time,
+                               secondPlayerTimer: secondPlayerSideView.time)
+    }
+    
+    func updateTimerPlayer(first: Double, second: Double) {
+        firstPlayerSideView.time = first
+        secondPlayerSideView.time = second
+    }
+    
+    //MARK: - ViewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         pauseButton.isHidden = true
         settingButton.isHidden = false
         restartButton.isHidden = true
     }
-    
+ 
+    //MARK: - Actions #selector()
     @objc private func tapPauseButton() {
         if isHiddenPauseButton == true {
             isHiddenPauseButton = false
-            firstPlayerSideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(firstPlayerTap)))
-            secondPlayerSideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(secondPlayerTap)))
+            firstPlayerSideView.isUserInteractionEnabled = true
+            secondPlayerSideView.isUserInteractionEnabled = true
+//            mainPresenter?.startTimerFirstPlayer()
+//            mainPresenter?.startTimerSecondPlayer()
         } else {
             isHiddenPauseButton = true
-            firstPlayerSideView.gestureRecognizers?.removeLast()
-            secondPlayerSideView.gestureRecognizers?.removeLast()
+            firstPlayerSideView.isUserInteractionEnabled = false
+            secondPlayerSideView.isUserInteractionEnabled = false
+            mainPresenter?.pauseTimerFirstPlayer()
+            mainPresenter?.pauseTimerSecondPlayer()
         }
         showExtraButton(state: isHiddenPauseButton)
     }
@@ -106,7 +144,25 @@ final class MainViewController: UIViewController, MainViewProtocol {
     }
     
     @objc private func tapRestartButton() {
-        
+        showAlertRestartConfirm { [weak self] in
+            guard let self = self else { return }
+            self.mainPresenter?.restart()
+            self.isTimerDidStart = false
+            self.firstPlayerSideView.isUserInteractionEnabled = true
+            self.secondPlayerSideView.isUserInteractionEnabled = true
+            self.firstPlayerSideView.time = 300
+            self.secondPlayerSideView.time = 300
+            self.pauseButton.isHidden = true
+            self.settingButton.isHidden = false
+            self.restartButton.isHidden = true
+            self.pauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            self.isHiddenPauseButton = false
+            self.showExtraButton(state: self.isHiddenPauseButton)
+            self.firstPlayerSideView.tapStartLabel.isHidden = false
+            self.secondPlayerSideView.tapStartLabel.isHidden = false
+            self.firstPlayerSideView.setupTimeButton.isHidden = false
+            self.secondPlayerSideView.setupTimeButton.isHidden = false
+        }
     }
     
     @objc private func firstPlayerTap() {
@@ -118,6 +174,8 @@ final class MainViewController: UIViewController, MainViewProtocol {
         settingButton.isHidden = true
         restartButton.isHidden = true
         isHiddenPauseButton = false
+        
+        didStartTimer()
     }
     
     @objc private func secondPlayerTap() {
@@ -129,6 +187,44 @@ final class MainViewController: UIViewController, MainViewProtocol {
         settingButton.isHidden = true
         restartButton.isHidden = true
         isHiddenPauseButton = false
+        
+        didStartTimer()
+    }
+}
+
+//MARK: - EXTENSIONS
+extension MainViewController {
+    
+    //MARK: - Alerts
+    private func showAlertRestartConfirm(completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: "Restart", message: "You are sure?", preferredStyle: .actionSheet)
+        let actionConfirme = UIAlertAction(title: "Confirme", style: .default) { confirme in
+            completion()
+        }
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(actionConfirme)
+        alert.addAction(actionCancel)
+        present(alert, animated: true)
+    }
+    
+    //MARK: - Constraints and setup UI
+    
+    /// Setup setting and restart buttons with animating
+    private func showExtraButton(state: Bool) {
+        UIView.animate(withDuration: 0.4) { [weak self] in
+            guard let self = self else { return }
+            if state {
+                self.settingButton.isHidden = false
+                self.restartButton.isHidden = false
+                self.settingButton.transform = CGAffineTransform(translationX: self.view.frame.width / 4, y: 0)
+                self.restartButton.transform = CGAffineTransform(translationX: -self.view.frame.width / 4, y: 0)
+                self.pauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            } else {
+                self.settingButton.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.restartButton.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.pauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+            }
+        }
     }
     
     private func addConstraints() {
@@ -212,24 +308,6 @@ final class MainViewController: UIViewController, MainViewProtocol {
         restartButton.backgroundColor = .white
         restartButton.layer.borderWidth = 0.2
         restartButton.layer.borderColor = UIColor.systemGray2.withAlphaComponent(1).cgColor
-    }
-    
-    /// Setup setting and restart buttons with animating
-    private func showExtraButton(state: Bool) {
-        UIView.animate(withDuration: 0.4) { [weak self] in
-            guard let self = self else { return }
-            if state {
-                self.settingButton.isHidden = false
-                self.restartButton.isHidden = false
-                self.settingButton.transform = CGAffineTransform(translationX: self.view.frame.width / 4, y: 0)
-                self.restartButton.transform = CGAffineTransform(translationX: -self.view.frame.width / 4, y: 0)
-                self.pauseButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            } else {
-                self.settingButton.transform = CGAffineTransform(translationX: 0, y: 0)
-                self.restartButton.transform = CGAffineTransform(translationX: 0, y: 0)
-                self.pauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            }
-        }
     }
 }
 
