@@ -11,6 +11,7 @@ protocol MainViewProtocol: AnyObject {
     func saveTimers()
     func didStartTimer()
     func updateTimerPlayer(first: Double, second: Double)
+    func gameOver(isFirst: Bool)
 }
 
 /// Main view controller
@@ -85,17 +86,18 @@ final class MainViewController: UIViewController, MainViewProtocol {
         restartButton.addTarget(self, action: #selector(tapRestartButton), for: .touchUpInside)
     }
     
+    //MARK: - Protocol methods
     func didStartTimer() {
         if !isTimerDidStart {
             mainPresenter?.startTimerSecondPlayer()
-            isTimerDidStart = true
             mainPresenter?.pauseTimerFirstPlayer()
+            isTimerDidStart = true
             firstPlayerSideView.isUserInteractionEnabled = true
             secondPlayerSideView.isUserInteractionEnabled = false
         } else {
+            mainPresenter?.startTimerFirstPlayer()
             mainPresenter?.pauseTimerSecondPlayer()
             isTimerDidStart = false
-            mainPresenter?.startTimerFirstPlayer()
             firstPlayerSideView.isUserInteractionEnabled = false
             secondPlayerSideView.isUserInteractionEnabled = true
         }
@@ -111,6 +113,14 @@ final class MainViewController: UIViewController, MainViewProtocol {
         secondPlayerSideView.time = second
     }
     
+    func gameOver(isFirst: Bool) {
+        if isFirst {
+            firstPlayerSideView.backgroundColor = .systemRed
+        } else {
+            secondPlayerSideView.backgroundColor = .systemRed
+        }
+    }
+    
     //MARK: - ViewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -123,10 +133,13 @@ final class MainViewController: UIViewController, MainViewProtocol {
     @objc private func tapPauseButton() {
         if isHiddenPauseButton == true {
             isHiddenPauseButton = false
-            firstPlayerSideView.isUserInteractionEnabled = true
-            secondPlayerSideView.isUserInteractionEnabled = true
-//            mainPresenter?.startTimerFirstPlayer()
-//            mainPresenter?.startTimerSecondPlayer()
+            if !isTimerDidStart {
+                secondPlayerSideView.isUserInteractionEnabled = true
+                mainPresenter?.startTimerFirstPlayer()
+            } else {
+                firstPlayerSideView.isUserInteractionEnabled = true
+                mainPresenter?.startTimerSecondPlayer()
+            }
         } else {
             isHiddenPauseButton = true
             firstPlayerSideView.isUserInteractionEnabled = false
@@ -158,6 +171,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
             self.pauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
             self.isHiddenPauseButton = false
             self.showExtraButton(state: self.isHiddenPauseButton)
+            self.changePlayerSideColor(style: .classic)
             self.firstPlayerSideView.tapStartLabel.isHidden = false
             self.secondPlayerSideView.tapStartLabel.isHidden = false
             self.firstPlayerSideView.setupTimeButton.isHidden = false
@@ -174,6 +188,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
         settingButton.isHidden = true
         restartButton.isHidden = true
         isHiddenPauseButton = false
+        isTimerDidStart = true
         
         didStartTimer()
     }
@@ -187,6 +202,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
         settingButton.isHidden = true
         restartButton.isHidden = true
         isHiddenPauseButton = false
+        isTimerDidStart = false
         
         didStartTimer()
     }
@@ -197,7 +213,7 @@ extension MainViewController {
     
     //MARK: - Alerts
     private func showAlertRestartConfirm(completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "Restart", message: "You are sure?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Restart", message: "Are you sure?", preferredStyle: .actionSheet)
         let actionConfirme = UIAlertAction(title: "Confirme", style: .default) { confirme in
             completion()
         }

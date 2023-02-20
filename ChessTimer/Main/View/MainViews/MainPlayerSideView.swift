@@ -150,7 +150,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         let hours = Double(timerPickerView.timerTuple.0) ?? 0 
         let minutes = Double(timerPickerView.timerTuple.1) ?? 0
         let seconds = Double(timerPickerView.timerTuple.2) ?? 0
-        time = hours * 3600 + minutes * 60 + seconds * 60
+        time = hours * 3600 + minutes * 60 + seconds
         
         setupTimeButton.isHidden = false
         timerLabel.isHidden = false

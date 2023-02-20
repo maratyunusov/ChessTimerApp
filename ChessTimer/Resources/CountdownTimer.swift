@@ -8,17 +8,15 @@
 import Foundation
 
 protocol CountdownTimerDelegate: AnyObject {
-    
-//    func countdownTimerDone()
-//    func countdownTime(time: (hours: String, minutes: String, seconds: String))
     func updateTimer()
 }
 
-class CountdownTimer {
+/// Timer class
+final class CountdownTimer {
     
     weak var delegate: CountdownTimerDelegate?
     
-    fileprivate var seconds: Double = 300.0
+    public var seconds: Double = 300.0
     public var duration: Double = 300.0
     
     lazy var timer: Timer = {
@@ -35,8 +33,6 @@ class CountdownTimer {
         let seconds = secondsToSeconds + minutesToSeconds + hoursToSeconds
         self.seconds = Double(seconds)
         self.duration = Double(seconds)
-        
-        //delegate?.countdownTime(time: timeString(time: TimeInterval(ceil(duration))))
     }
     
     public func start() {
@@ -47,40 +43,22 @@ class CountdownTimer {
         timer.invalidate()
     }
     
-    public func stop() {
-        timer.invalidate()
-        duration = seconds
-        //delegate?.countdownTime(time: timeString(time: TimeInterval(ceil(duration))))
-    }
-    
     fileprivate func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
     
     @objc fileprivate func updateTimer(){
-        if duration < 0.0 {
+        if duration == 0.0 {
             timer.invalidate()
             timerDone()
         } else {
             duration -= 1
-            //print(TimeInterval(duration))
-            //delegate?.countdownTime(time: timeString(time: TimeInterval(ceil(duration))))
             delegate?.updateTimer()
         }
-    }
-    
-    fileprivate func timeString(time:TimeInterval) -> (hours: String, minutes:String, seconds:String) {
-        
-        let hours = Int(time) / 3600
-        let minutes = Int(time) / 60 % 60
-        let seconds = Int(time) % 60
-        
-        return (hours: String(format:"%02i", hours), minutes: String(format:"%02i", minutes), seconds: String(format:"%02i", seconds))
     }
     
     fileprivate func timerDone() {
         timer.invalidate()
         duration = seconds
-        //delegate?.countdownTimerDone()
     }
 }

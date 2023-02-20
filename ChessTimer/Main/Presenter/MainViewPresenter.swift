@@ -38,27 +38,31 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
     }
     
     func startTimerFirstPlayer() {
-        firstPlayerCountdownTimer.start()
-        
+        secondPlayerCountdownTimer.start()
     }
     
     func startTimerSecondPlayer() {
-        secondPlayerCountdownTimer.start()
+        firstPlayerCountdownTimer.start()
     }
 
     func pauseTimerFirstPlayer() {
-        firstPlayerCountdownTimer.pause()
-        
+        secondPlayerCountdownTimer.pause()
     }
     
     func pauseTimerSecondPlayer() {
-        secondPlayerCountdownTimer.pause()
+        firstPlayerCountdownTimer.pause()
     }
     
     func updateTimer() {
         let first = firstPlayerCountdownTimer.duration
         let second = secondPlayerCountdownTimer.duration
         mainView?.updateTimerPlayer(first: first, second: second)
+        
+        if first == 0 {
+            mainView?.gameOver(isFirst: true)
+        } else if second == 0 {
+            mainView?.gameOver(isFirst: false)
+        }
     }
     
     func restart() {

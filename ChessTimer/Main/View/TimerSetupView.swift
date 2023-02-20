@@ -73,31 +73,6 @@ extension TimerSetupView: UIPickerViewDataSource, UIPickerViewDelegate {
         default:
             break
         }
-        
-        
-        
-//        switch component {
-//        case 0:
-//            if Int(timeArray[0][row])! < 10 {
-//                timerTuple.0 = "0\(timeArray[0][row])"
-//            } else {
-//                timerTuple.0 = "\(timeArray[0][row])"
-//            }
-//        case 1:
-//            if Int(timeArray[1][row])! < 10 {
-//                timerTuple.1 = "0\(timeArray[1][row])"
-//            } else {
-//                timerTuple.1 = "\(timeArray[1][row])"
-//            }
-//        case 2:
-//            if Int(timeArray[2][row])! < 10 {
-//                timerTuple.2 = "0\(timeArray[2][row])"
-//            } else {
-//                timerTuple.2 = "\(timeArray[2][row])"
-//            }
-//        default:
-//            break
-//        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
