@@ -15,7 +15,7 @@
 		C0713F83299D5C8700C11A92 /* MainBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0713F82299D5C8700C11A92 /* MainBuilder.swift */; };
 		C073C30D299E5CB100E0A2C2 /* Extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C30C299E5CB100E0A2C2 /* Extenstions.swift */; };
 		C073C313299E850500E0A2C2 /* SettingsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C312299E850500E0A2C2 /* SettingsBuilder.swift */; };
-		C073C319299F5AB200E0A2C2 /* SettingsTabBarContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C318299F5AB200E0A2C2 /* SettingsTabBarContoller.swift */; };
+		C073C319299F5AB200E0A2C2 /* SettingsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C318299F5AB200E0A2C2 /* SettingsTabBarController.swift */; };
 		C073C31D299F5E1A00E0A2C2 /* BackgroundColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C31C299F5E1A00E0A2C2 /* BackgroundColorViewController.swift */; };
 		C073C31F29A2865100E0A2C2 /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C31E29A2865100E0A2C2 /* CountdownTimer.swift */; };
 		C0F387432996498C00EF5B1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387422996498C00EF5B1E /* AppDelegate.swift */; };
@@ -37,7 +37,7 @@
 		C0713F82299D5C8700C11A92 /* MainBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBuilder.swift; sourceTree = "<group>"; };
 		C073C30C299E5CB100E0A2C2 /* Extenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extenstions.swift; sourceTree = "<group>"; };
 		C073C312299E850500E0A2C2 /* SettingsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBuilder.swift; sourceTree = "<group>"; };
-		C073C318299F5AB200E0A2C2 /* SettingsTabBarContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabBarContoller.swift; sourceTree = "<group>"; };
+		C073C318299F5AB200E0A2C2 /* SettingsTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabBarController.swift; sourceTree = "<group>"; };
 		C073C31C299F5E1A00E0A2C2 /* BackgroundColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundColorViewController.swift; sourceTree = "<group>"; };
 		C073C31E29A2865100E0A2C2 /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
 		C0F3873F2996498C00EF5B1E /* ChessTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,7 +118,7 @@
 		C073C315299E858000E0A2C2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C073C318299F5AB200E0A2C2 /* SettingsTabBarContoller.swift */,
+				C073C318299F5AB200E0A2C2 /* SettingsTabBarController.swift */,
 				C05E94B029AB468A00C1DEE4 /* GameModeViewController.swift */,
 				C073C31C299F5E1A00E0A2C2 /* BackgroundColorViewController.swift */,
 			);
@@ -304,7 +304,7 @@
 				C0F3875F29981F2100EF5B1E /* TimerSetupView.swift in Sources */,
 				C073C30D299E5CB100E0A2C2 /* Extenstions.swift in Sources */,
 				C0F387452996498C00EF5B1E /* SceneDelegate.swift in Sources */,
-				C073C319299F5AB200E0A2C2 /* SettingsTabBarContoller.swift in Sources */,
+				C073C319299F5AB200E0A2C2 /* SettingsTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

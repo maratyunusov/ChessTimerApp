@@ -9,20 +9,18 @@ import UIKit
 
 final class SettingsTabBarController: UITabBarController {
     
+    let gameModeVC = GameModeViewController()
+    let backgroundColorVC = BackgroundColorViewController()
+   
+    //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
         setTabBarAppearance()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-    }
-    
+   
+    //MARK: - Configure TabBarContoller
     private func setupTabs() {
-        let gameModeVC = GameModeViewController()
-        let backgroundColorVC = BackgroundColorViewController()
         viewControllers = [generateVC(gameModeVC,
                                       title: "Mode",
                                       image: UIImage(systemName: "hare")),

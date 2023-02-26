@@ -20,6 +20,8 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
     
     weak var mainView: MainViewProtocol?
     
+    private var time: (Double, Double) = (0.0, 0.0)
+    
     var firstPlayerCountdownTimer = CountdownTimer()
     var secondPlayerCountdownTimer = CountdownTimer()
     
@@ -33,6 +35,7 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
     func setTime(firstPlayerTimer: Double, secondPlayerTimer: Double) {
         firstPlayerCountdownTimer.duration = firstPlayerTimer
         secondPlayerCountdownTimer.duration = secondPlayerTimer
+        time = (firstPlayerTimer, secondPlayerTimer)
     }
     
     func startTimerFirstPlayer() {
@@ -64,8 +67,8 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
     }
     
     func restart() {
-        firstPlayerCountdownTimer.duration = 300
-        secondPlayerCountdownTimer.duration = 300
+        firstPlayerCountdownTimer.duration = time.0
+        secondPlayerCountdownTimer.duration = time.1
     }
     
 }
