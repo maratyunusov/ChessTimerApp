@@ -20,8 +20,6 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
     
     weak var mainView: MainViewProtocol?
     
-    let time: Double = 0.0
-    
     var firstPlayerCountdownTimer = CountdownTimer()
     var secondPlayerCountdownTimer = CountdownTimer()
     

@@ -7,19 +7,17 @@
 
 import UIKit
 
-class SettingsTabBarController: UITabBarController {
+final class SettingsTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if #available(iOS 15.0, *) {
-            view.backgroundColor = .systemMint
-        } else {
-            view.backgroundColor = .systemGray6
-        }
-        
         setupTabs()
         setTabBarAppearance()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
     }
     
     private func setupTabs() {
@@ -61,5 +59,6 @@ class SettingsTabBarController: UITabBarController {
         roundLayer.fillColor = UIColor.mainWhite.cgColor
         tabBar.tintColor = .tabBarItemAccent
         tabBar.unselectedItemTintColor = .tabBarItemLight
+        tabBar.barTintColor = .clear
     }
 }

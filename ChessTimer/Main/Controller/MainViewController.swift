@@ -8,6 +8,7 @@
 import UIKit
 
 protocol MainViewProtocol: AnyObject {
+    func didChooseTimeMode(time: Double)
     func saveTimers()
     func didStartTimer()
     func updateTimerPlayer(first: Double, second: Double)
@@ -86,6 +87,14 @@ final class MainViewController: UIViewController, MainViewProtocol {
         restartButton.addTarget(self, action: #selector(tapRestartButton), for: .touchUpInside)
     }
     
+    //MARK: - ViewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        pauseButton.isHidden = true
+        settingButton.isHidden = false
+        restartButton.isHidden = true
+    }
+    
     //MARK: - Protocol methods
     func didStartTimer() {
         if !isTimerDidStart {
@@ -94,18 +103,28 @@ final class MainViewController: UIViewController, MainViewProtocol {
             isTimerDidStart = true
             firstPlayerSideView.isUserInteractionEnabled = true
             secondPlayerSideView.isUserInteractionEnabled = false
+            firstPlayerSideView.backgroundColor = .systemGreen
+            secondPlayerSideView.backgroundColor = .tabBarItemAccent
         } else {
             mainPresenter?.startTimerFirstPlayer()
             mainPresenter?.pauseTimerSecondPlayer()
             isTimerDidStart = false
             firstPlayerSideView.isUserInteractionEnabled = false
             secondPlayerSideView.isUserInteractionEnabled = true
+            secondPlayerSideView.backgroundColor = .systemGreen
+            firstPlayerSideView.backgroundColor = .tabBarItemLight
         }
     }
     
     func saveTimers() {
         mainPresenter?.setTime(firstPlayerTimer: firstPlayerSideView.time,
                                secondPlayerTimer: secondPlayerSideView.time)
+    }
+    
+    func didChooseTimeMode(time: Double) {
+        firstPlayerSideView.time = time
+        secondPlayerSideView.time = time
+        mainPresenter?.setTime(firstPlayerTimer: time, secondPlayerTimer: time)
     }
     
     func updateTimerPlayer(first: Double, second: Double) {
@@ -119,14 +138,6 @@ final class MainViewController: UIViewController, MainViewProtocol {
         } else {
             secondPlayerSideView.backgroundColor = .systemRed
         }
-    }
-    
-    //MARK: - ViewWillAppear
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        pauseButton.isHidden = true
-        settingButton.isHidden = false
-        restartButton.isHidden = true
     }
  
     //MARK: - Actions #selector()
