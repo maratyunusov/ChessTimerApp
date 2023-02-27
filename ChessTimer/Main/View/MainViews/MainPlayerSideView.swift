@@ -22,6 +22,8 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     
     var delegate: MainViewProtocol?
     
+    public var isActivePicker = false
+    
     var time: Double = 300 {
         didSet {
             let hours = Int(time) / 3600
@@ -138,6 +140,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     }
     
     @objc private func setupTime() {
+        isActivePicker = true
         timerLabel.isHidden = true
         tapStartLabel.isHidden = true
         timerPickerView.isHidden = false
@@ -152,6 +155,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         let seconds = Double(timerPickerView.timerTuple.2) ?? 0
         time = hours * 3600 + minutes * 60 + seconds
         
+        isActivePicker = false
         setupTimeButton.isHidden = false
         timerLabel.isHidden = false
         tapStartLabel.isHidden = false
@@ -163,6 +167,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     }
     
     @objc private func cancelTapped() {
+        isActivePicker = false
         setupTimeButton.isHidden = false
         timerLabel.isHidden = false
         tapStartLabel.isHidden = false
@@ -212,6 +217,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     }
     
     private func setupTitlePickerStackView() {
+        var arrangedSubviews: [UILabel] = []
         for (index, _) in (0...2).enumerated() {
             let namePicker = UILabel()
             if index == 0 {
@@ -224,7 +230,12 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
             namePicker.textAlignment = .center
             namePicker.textColor = .white
             namePicker.translatesAutoresizingMaskIntoConstraints = false
-            titlePickerStackView.addArrangedSubview(namePicker)
+            arrangedSubviews.append(namePicker)
+        }
+        if titlePickerStackView.arrangedSubviews.count == 0 {
+            arrangedSubviews.forEach { label in
+                titlePickerStackView.addArrangedSubview(label)
+            }
         }
     }
 }

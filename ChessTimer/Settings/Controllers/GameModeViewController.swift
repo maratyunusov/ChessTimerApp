@@ -13,8 +13,6 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     
     private var time: Double = 300.0
     
-    private var collectionView: UICollectionView?
-    
     private let timeModes: [TimeModel] = [TimeModel(description: "Longer", time: "60"),
                                   TimeModel(description: "Medium", time: "30"),
                                   TimeModel(description: "Standart", time: "15"),
@@ -24,24 +22,40 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     ]
     
     private var lastIndexActive: IndexPath = [0,4]
+    
+    private var collectionView: UICollectionView?
+    
+    private var startButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        setupStartButton()
         
         lastIndexActive.row = UserDefaults.standard.integer(forKey: "indexPathRow")
         time = UserDefaults.standard.double(forKey: "time")
-        
+        startButton.addTarget(self, action: #selector(tapStart), for: .touchUpInside)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        delegate?.setChooseTimerMode(time: time)
+        print("disappear")
         UserDefaults.standard.setValue(time, forKey: "time")
         UserDefaults.standard.setValue(lastIndexActive.row, forKey: "indexPathRow")
     }
     
-    //MARK: - Setup CollectionView
+    //MARK: - Targets
+    @objc func tapStart() {
+        delegate?.setChooseTimerMode(time: time)
+        dismiss(animated: true)
+    }
+    
+    //MARK: - Configure UI
+    
+    //setup collection view
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -56,8 +70,29 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
-        collectionView.frame = view.bounds
+        collectionView.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width, height: view.frame.height * 0.7))
         collectionView.backgroundColor = #colorLiteral(red: 0.8374214172, green: 0.8374213576, blue: 0.8374213576, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.8374214172, green: 0.8374213576, blue: 0.8374213576, alpha: 1)
+    }
+    
+    //setup start button
+    private func setupStartButton() {
+        view.addSubview(startButton)
+        startButton.setTitle("START", for: .normal)
+        startButton.setTitleColor(.tabBarItemAccent, for: .normal)
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        startButton.backgroundColor = .mainWhite
+        startButton.layer.cornerRadius = 50 / 2
+        startButton.layer.shadowOffset = CGSize(width: 0, height: 5)
+        startButton.layer.shadowRadius = 5
+        startButton.layer.shadowOpacity = 0.5
+        
+        NSLayoutConstraint.activate([
+            startButton.widthAnchor.constraint(equalToConstant: view.frame.width / 3),
+            startButton.heightAnchor.constraint(equalToConstant: 50),
+            startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
   
     //MARK: - DataSource
