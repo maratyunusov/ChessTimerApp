@@ -24,9 +24,10 @@ final class SettingsTabBarController: UITabBarController {
         viewControllers = [generateVC(gameModeVC,
                                       title: "Mode",
                                       image: UIImage(systemName: "hare")),
-                           generateVC(backgroundColorVC,
-                                      title: "Style",
-                                      image: UIImage(systemName: "paintpalette"))]
+//                           generateVC(backgroundColorVC,
+//                                      title: "Style",
+//                                      image: UIImage(systemName: "paintpalette"))
+        ]
     }
     
     private func generateVC(_ viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {

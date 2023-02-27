@@ -69,6 +69,7 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
     func restart() {
         firstPlayerCountdownTimer.duration = time.0
         secondPlayerCountdownTimer.duration = time.1
+        mainView?.updateTimerPlayer(first: time.0, second: time.1)
     }
     
 }
