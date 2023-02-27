@@ -7,24 +7,20 @@
 
 import UIKit
 
-class SettingsTabBarController: UITabBarController {
+final class SettingsTabBarController: UITabBarController {
     
+    let gameModeVC = GameModeViewController()
+    let backgroundColorVC = BackgroundColorViewController()
+   
+    //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if #available(iOS 15.0, *) {
-            view.backgroundColor = .systemMint
-        } else {
-            view.backgroundColor = .systemGray6
-        }
-        
         setupTabs()
         setTabBarAppearance()
     }
-    
+   
+    //MARK: - Configure TabBarContoller
     private func setupTabs() {
-        let gameModeVC = GameModeViewController()
-        let backgroundColorVC = BackgroundColorViewController()
         viewControllers = [generateVC(gameModeVC,
                                       title: "Mode",
                                       image: UIImage(systemName: "hare")),
@@ -61,5 +57,6 @@ class SettingsTabBarController: UITabBarController {
         roundLayer.fillColor = UIColor.mainWhite.cgColor
         tabBar.tintColor = .tabBarItemAccent
         tabBar.unselectedItemTintColor = .tabBarItemLight
+        tabBar.barTintColor = .clear
     }
 }

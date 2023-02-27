@@ -8,6 +8,7 @@
 import UIKit
 
 protocol MainViewProtocol: AnyObject {
+    func setChooseTimerMode(time: Double)
     func saveTimers()
     func didStartTimer()
     func updateTimerPlayer(first: Double, second: Double)
@@ -22,6 +23,8 @@ final class MainViewController: UIViewController, MainViewProtocol {
     }
     
     var mainPresenter: MainViewPresenterProtocol?
+    
+    var currentTime: Double = 0.0
     
     var isTimerDidStart = false
     var isHiddenPauseButton = false
@@ -84,6 +87,17 @@ final class MainViewController: UIViewController, MainViewProtocol {
         pauseButton.addTarget(self, action: #selector(tapPauseButton), for: .touchUpInside)
         settingButton.addTarget(self, action: #selector(tapSettingButton), for: .touchUpInside)
         restartButton.addTarget(self, action: #selector(tapRestartButton), for: .touchUpInside)
+        
+        let userDefaultTime = UserDefaults.standard.double(forKey: "time")
+        setChooseTimerMode(time: userDefaultTime)
+    }
+    
+    //MARK: - ViewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        pauseButton.isHidden = true
+        settingButton.isHidden = false
+        restartButton.isHidden = true
     }
     
     //MARK: - Protocol methods
@@ -94,18 +108,29 @@ final class MainViewController: UIViewController, MainViewProtocol {
             isTimerDidStart = true
             firstPlayerSideView.isUserInteractionEnabled = true
             secondPlayerSideView.isUserInteractionEnabled = false
+            firstPlayerSideView.backgroundColor = .systemGreen
+            secondPlayerSideView.backgroundColor = .tabBarItemAccent
         } else {
             mainPresenter?.startTimerFirstPlayer()
             mainPresenter?.pauseTimerSecondPlayer()
             isTimerDidStart = false
             firstPlayerSideView.isUserInteractionEnabled = false
             secondPlayerSideView.isUserInteractionEnabled = true
+            secondPlayerSideView.backgroundColor = .systemGreen
+            firstPlayerSideView.backgroundColor = .tabBarItemLight
         }
     }
     
     func saveTimers() {
         mainPresenter?.setTime(firstPlayerTimer: firstPlayerSideView.time,
                                secondPlayerTimer: secondPlayerSideView.time)
+    }
+    
+    func setChooseTimerMode(time: Double) {
+        firstPlayerSideView.time = time
+        secondPlayerSideView.time = time
+        mainPresenter?.setTime(firstPlayerTimer: time, secondPlayerTimer: time)
+        currentTime = time
     }
     
     func updateTimerPlayer(first: Double, second: Double) {
@@ -119,14 +144,6 @@ final class MainViewController: UIViewController, MainViewProtocol {
         } else {
             secondPlayerSideView.backgroundColor = .systemRed
         }
-    }
-    
-    //MARK: - ViewWillAppear
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        pauseButton.isHidden = true
-        settingButton.isHidden = false
-        restartButton.isHidden = true
     }
  
     //MARK: - Actions #selector()
@@ -151,7 +168,8 @@ final class MainViewController: UIViewController, MainViewProtocol {
     }
     
     @objc private func tapSettingButton() {
-        let settingsVC = SettingsBuilder.build()
+        guard let settingsVC = SettingsBuilder.build() as? SettingsTabBarController else { return }
+        settingsVC.gameModeVC.delegate = self
         settingsVC.modalTransitionStyle = .flipHorizontal
         present(settingsVC, animated: true)
     }
@@ -163,8 +181,6 @@ final class MainViewController: UIViewController, MainViewProtocol {
             self.isTimerDidStart = false
             self.firstPlayerSideView.isUserInteractionEnabled = true
             self.secondPlayerSideView.isUserInteractionEnabled = true
-            self.firstPlayerSideView.time = 300
-            self.secondPlayerSideView.time = 300
             self.pauseButton.isHidden = true
             self.settingButton.isHidden = false
             self.restartButton.isHidden = true
@@ -176,6 +192,8 @@ final class MainViewController: UIViewController, MainViewProtocol {
             self.secondPlayerSideView.tapStartLabel.isHidden = false
             self.firstPlayerSideView.setupTimeButton.isHidden = false
             self.secondPlayerSideView.setupTimeButton.isHidden = false
+            self.firstPlayerSideView.time = self.currentTime
+            self.secondPlayerSideView.time = self.currentTime
         }
     }
     

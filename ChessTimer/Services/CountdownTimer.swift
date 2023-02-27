@@ -47,7 +47,7 @@ final class CountdownTimer {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
     
-    @objc fileprivate func updateTimer(){
+    @objc fileprivate func updateTimer() {
         if duration == 0.0 {
             timer.invalidate()
             timerDone()
