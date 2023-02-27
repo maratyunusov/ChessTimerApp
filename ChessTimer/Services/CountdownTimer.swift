@@ -25,7 +25,6 @@ final class CountdownTimer {
     }()
     
     public func setTimer(hours:Int, minutes:Int, seconds:Int) {
-        
         let hoursToSeconds = hours * 3600
         let minutesToSeconds = minutes * 60
         let secondsToSeconds = seconds

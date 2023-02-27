@@ -64,7 +64,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +75,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
                          settingButton,
                          restartButton,
                          pauseButton
-                         )
+        )
         
         addConstraints()
         changePlayerSideColor(style: .classic)
@@ -131,6 +131,9 @@ final class MainViewController: UIViewController, MainViewProtocol {
         secondPlayerSideView.time = time
         mainPresenter?.setTime(firstPlayerTimer: time, secondPlayerTimer: time)
         currentTime = time
+        
+        changePlayerSideColor(style: .classic)
+        restartGameUpdateUI()
     }
     
     func updateTimerPlayer(first: Double, second: Double) {
@@ -144,8 +147,12 @@ final class MainViewController: UIViewController, MainViewProtocol {
         } else {
             secondPlayerSideView.backgroundColor = .systemRed
         }
+        
+        firstPlayerSideView.isUserInteractionEnabled = false
+        secondPlayerSideView.isUserInteractionEnabled = false
+        tapRestartButton()
     }
- 
+    
     //MARK: - Actions #selector()
     @objc private func tapPauseButton() {
         if isHiddenPauseButton == true {
@@ -176,53 +183,40 @@ final class MainViewController: UIViewController, MainViewProtocol {
     
     @objc private func tapRestartButton() {
         showAlertRestartConfirm { [weak self] in
-            guard let self = self else { return }
-            self.mainPresenter?.restart()
-            self.isTimerDidStart = false
-            self.firstPlayerSideView.isUserInteractionEnabled = true
-            self.secondPlayerSideView.isUserInteractionEnabled = true
-            self.pauseButton.isHidden = true
-            self.settingButton.isHidden = false
-            self.restartButton.isHidden = true
-            self.pauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            self.isHiddenPauseButton = false
-            self.showExtraButton(state: self.isHiddenPauseButton)
-            self.changePlayerSideColor(style: .classic)
-            self.firstPlayerSideView.tapStartLabel.isHidden = false
-            self.secondPlayerSideView.tapStartLabel.isHidden = false
-            self.firstPlayerSideView.setupTimeButton.isHidden = false
-            self.secondPlayerSideView.setupTimeButton.isHidden = false
-            self.firstPlayerSideView.time = self.currentTime
-            self.secondPlayerSideView.time = self.currentTime
+            self?.restartGameUpdateUI()
         }
     }
     
     @objc private func firstPlayerTap() {
-        firstPlayerSideView.setupTimeButton.isHidden = true
-        secondPlayerSideView.setupTimeButton.isHidden = true
-        firstPlayerSideView.tapStartLabel.isHidden = true
-        secondPlayerSideView.tapStartLabel.isHidden = true
-        pauseButton.isHidden = false
-        settingButton.isHidden = true
-        restartButton.isHidden = true
-        isHiddenPauseButton = false
-        isTimerDidStart = true
-        
-        didStartTimer()
+        if secondPlayerSideView.isActivePicker == false {
+            firstPlayerSideView.setupTimeButton.isHidden = true
+            secondPlayerSideView.setupTimeButton.isHidden = true
+            firstPlayerSideView.tapStartLabel.isHidden = true
+            secondPlayerSideView.tapStartLabel.isHidden = true
+            pauseButton.isHidden = false
+            settingButton.isHidden = true
+            restartButton.isHidden = true
+            isHiddenPauseButton = false
+            isTimerDidStart = true
+            
+            didStartTimer()
+        }
     }
     
     @objc private func secondPlayerTap() {
-        firstPlayerSideView.setupTimeButton.isHidden = true
-        secondPlayerSideView.setupTimeButton.isHidden = true
-        firstPlayerSideView.tapStartLabel.isHidden = true
-        secondPlayerSideView.tapStartLabel.isHidden = true
-        pauseButton.isHidden = false
-        settingButton.isHidden = true
-        restartButton.isHidden = true
-        isHiddenPauseButton = false
-        isTimerDidStart = false
-        
-        didStartTimer()
+        if firstPlayerSideView.isActivePicker == false {
+            firstPlayerSideView.setupTimeButton.isHidden = true
+            secondPlayerSideView.setupTimeButton.isHidden = true
+            firstPlayerSideView.tapStartLabel.isHidden = true
+            secondPlayerSideView.tapStartLabel.isHidden = true
+            pauseButton.isHidden = false
+            settingButton.isHidden = true
+            restartButton.isHidden = true
+            isHiddenPauseButton = false
+            isTimerDidStart = false
+            
+            didStartTimer()
+        }
     }
 }
 
@@ -239,6 +233,37 @@ extension MainViewController {
         alert.addAction(actionConfirme)
         alert.addAction(actionCancel)
         present(alert, animated: true)
+    }
+    
+    private func restartGameUpdateUI() {
+        mainPresenter?.restart()
+        isTimerDidStart = false
+        firstPlayerSideView.isUserInteractionEnabled = true
+        secondPlayerSideView.isUserInteractionEnabled = true
+        pauseButton.isHidden = true
+        settingButton.isHidden = false
+        restartButton.isHidden = true
+        pauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        isHiddenPauseButton = false
+        showExtraButton(state: isHiddenPauseButton)
+        changePlayerSideColor(style: .classic)
+        firstPlayerSideView.tapStartLabel.isHidden = false
+        secondPlayerSideView.tapStartLabel.isHidden = false
+        firstPlayerSideView.setupTimeButton.isHidden = false
+        secondPlayerSideView.setupTimeButton.isHidden = false
+//        firstPlayerSideView.time = currentTime
+//        secondPlayerSideView.time = currentTime
+    }
+    
+    private func changePlayerSideColor(style: PlayerSideColor) {
+        switch style {
+        case .classic:
+            firstPlayerSideView.backgroundColor = .tabBarItemLight
+            secondPlayerSideView.backgroundColor = .tabBarItemAccent
+        case .style1:
+            firstPlayerSideView.backgroundColor = .systemRed
+            secondPlayerSideView.backgroundColor = .systemBlue
+        }
     }
     
     //MARK: - Constraints and setup UI
@@ -286,17 +311,6 @@ extension MainViewController {
             restartButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/7.5),
             restartButton.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/7.5),
         ])
-    }
-    
-    private func changePlayerSideColor(style: PlayerSideColor) {
-        switch style {
-        case .classic:
-            firstPlayerSideView.backgroundColor = .tabBarItemLight
-            secondPlayerSideView.backgroundColor = .tabBarItemAccent
-        case .style1:
-            firstPlayerSideView.backgroundColor = .systemRed
-            secondPlayerSideView.backgroundColor = .systemBlue
-        }
     }
     
     private func setupButtons() {
