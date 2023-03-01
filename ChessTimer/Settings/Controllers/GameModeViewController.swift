@@ -11,17 +11,17 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     
     weak var delegate: MainViewProtocol?
     
-    private var time: Double = 300.0
+    private var time: Double = 0.0
     
     private let timeModes: [TimeModel] = [TimeModel(description: "Longer", time: "60"),
-                                  TimeModel(description: "Medium", time: "30"),
-                                  TimeModel(description: "Standart", time: "15"),
-                                  TimeModel(description: "Blitz", time: "10"),
-                                  TimeModel(description: "Faster", time: "5"),
-                                  TimeModel(description: "Bullet", time: "1")
+                                          TimeModel(description: "Medium", time: "30"),
+                                          TimeModel(description: "Standart", time: "15"),
+                                          TimeModel(description: "Blitz", time: "10"),
+                                          TimeModel(description: "Faster", time: "5"),
+                                          TimeModel(description: "Bullet", time: "1")
     ]
     
-    private var lastIndexActive: IndexPath = [0,4]
+    private var lastIndexActive: IndexPath = [0,0]
     
     private var collectionView: UICollectionView?
     
@@ -123,7 +123,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
             
             guard let inActiveCell = collectionView.cellForItem(at: lastIndexActive) as? TimeModeCollectionViewCell else { return }
             inActiveCell.backgroundColor = #colorLiteral(red: 0.6627451181, green: 0.6627451181, blue: 0.6627451181, alpha: 1)
-            inActiveCell.layer.masksToBounds = true
+            inActiveCell.layer.masksToBounds = false
             lastIndexActive = indexPath
         }
     }
