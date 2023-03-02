@@ -16,15 +16,18 @@ protocol MainViewProtocol: AnyObject {
 }
 
 /// Main view controller
-final class MainViewController: UIViewController, MainViewProtocol {
-    fileprivate enum PlayerSideColor {
+final class MainViewController: UIViewController, MainViewProtocol, BackgroundStyleDelegate {
+    fileprivate enum PlayerSideColor: Int {
         case classic
         case style1
+        case style2
     }
     
     var mainPresenter: MainViewPresenterProtocol?
     
-    var currentTime: Double = 0.0
+    private var currentTime: Double = 0.0
+    fileprivate var currentStyle: PlayerSideColor = .classic
+    var currentBackgroundStyle: (UIColor, UIColor, UIColor)?
     
     var isTimerDidStart = false
     var isHiddenPauseButton = false
@@ -76,9 +79,10 @@ final class MainViewController: UIViewController, MainViewProtocol {
                          restartButton,
                          pauseButton
         )
-        
         addConstraints()
-        changePlayerSideColor(style: .classic)
+        
+        changePlayerSideColor(style: PlayerSideColor.init(rawValue: UserDefaults.standard.integer(forKey: "currentStyle")) ?? .classic)
+        
         setupButtons()
         
         firstPlayerSideView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(firstPlayerTap)))
@@ -108,16 +112,16 @@ final class MainViewController: UIViewController, MainViewProtocol {
             isTimerDidStart = true
             firstPlayerSideView.isUserInteractionEnabled = true
             secondPlayerSideView.isUserInteractionEnabled = false
-            firstPlayerSideView.backgroundColor = .systemGreen
-            secondPlayerSideView.backgroundColor = .tabBarItemAccent
+            firstPlayerSideView.backgroundColor = currentBackgroundStyle?.2
+            secondPlayerSideView.backgroundColor = currentBackgroundStyle?.1
         } else {
             mainPresenter?.startTimerFirstPlayer()
             mainPresenter?.pauseTimerSecondPlayer()
             isTimerDidStart = false
             firstPlayerSideView.isUserInteractionEnabled = false
             secondPlayerSideView.isUserInteractionEnabled = true
-            secondPlayerSideView.backgroundColor = .systemGreen
-            firstPlayerSideView.backgroundColor = .tabBarItemLight
+            secondPlayerSideView.backgroundColor = currentBackgroundStyle?.2
+            firstPlayerSideView.backgroundColor = currentBackgroundStyle?.0
         }
     }
     
@@ -132,7 +136,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
         mainPresenter?.setTime(firstPlayerTimer: time, secondPlayerTimer: time)
         currentTime = time
         
-        changePlayerSideColor(style: .classic)
+        changePlayerSideColor(style: currentStyle)
         restartGameUpdateUI()
     }
     
@@ -151,6 +155,15 @@ final class MainViewController: UIViewController, MainViewProtocol {
         firstPlayerSideView.isUserInteractionEnabled = false
         secondPlayerSideView.isUserInteractionEnabled = false
         tapRestartButton()
+    }
+    
+    //MARK: - Delegates
+    func changeBackgroundStyle(index: Int) {
+        if let style = PlayerSideColor.init(rawValue: index) {
+            currentStyle = style
+            changePlayerSideColor(style: style)
+            
+        }
     }
     
     //MARK: - Actions #selector()
@@ -177,6 +190,7 @@ final class MainViewController: UIViewController, MainViewProtocol {
     @objc private func tapSettingButton() {
         guard let settingsVC = SettingsBuilder.build() as? SettingsTabBarController else { return }
         settingsVC.gameModeVC.delegate = self
+        settingsVC.backgroundColorVC.delegate = self
         settingsVC.modalTransitionStyle = .flipHorizontal
         present(settingsVC, animated: true)
     }
@@ -246,24 +260,38 @@ extension MainViewController {
         pauseButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         isHiddenPauseButton = false
         showExtraButton(state: isHiddenPauseButton)
-        changePlayerSideColor(style: .classic)
+        changePlayerSideColor(style: currentStyle)
         firstPlayerSideView.tapStartLabel.isHidden = false
         secondPlayerSideView.tapStartLabel.isHidden = false
         firstPlayerSideView.setupTimeButton.isHidden = false
         secondPlayerSideView.setupTimeButton.isHidden = false
-//        firstPlayerSideView.time = currentTime
-//        secondPlayerSideView.time = currentTime
     }
     
     private func changePlayerSideColor(style: PlayerSideColor) {
         switch style {
         case .classic:
-            firstPlayerSideView.backgroundColor = .tabBarItemLight
-            secondPlayerSideView.backgroundColor = .tabBarItemAccent
+            currentStyle = .classic
+            firstPlayerSideView.backgroundColor = ColorSet.classic1
+            secondPlayerSideView.backgroundColor = ColorSet.classic2
+            currentBackgroundStyle = (UIColor.tabBarItemLight,
+                                      UIColor.tabBarItemAccent,
+                                      UIColor.systemGreen)
         case .style1:
-            firstPlayerSideView.backgroundColor = .systemRed
-            secondPlayerSideView.backgroundColor = .systemBlue
+            currentStyle = .style1
+            firstPlayerSideView.backgroundColor = ColorSet.styleOne1
+            secondPlayerSideView.backgroundColor = ColorSet.styleOne2
+            currentBackgroundStyle = (firstPlayerSideView.backgroundColor ?? .clear,
+                                      secondPlayerSideView.backgroundColor ?? .clear,
+                                      UIColor.systemGreen)
+        case .style2:
+            currentStyle = .style2
+            firstPlayerSideView.backgroundColor = ColorSet.styleTwo1
+            secondPlayerSideView.backgroundColor = ColorSet.styleTwo2
+            currentBackgroundStyle = (firstPlayerSideView.backgroundColor ?? .clear,
+                                      secondPlayerSideView.backgroundColor ?? .clear,
+                                      UIColor.systemGreen)
         }
+        
     }
     
     //MARK: - Constraints and setup UI

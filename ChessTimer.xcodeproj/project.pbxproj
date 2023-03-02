@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C0003D0529AF4D3600B3AFE8 /* ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0003D0429AF4D3600B3AFE8 /* ColorSet.swift */; };
 		C05E94AE29AB3F8B00C1DEE4 /* TimeModeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E94AC29AB3F8B00C1DEE4 /* TimeModeCollectionViewCell.swift */; };
 		C05E94AF29AB3F8B00C1DEE4 /* TimeModeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C05E94AD29AB3F8B00C1DEE4 /* TimeModeCollectionViewCell.xib */; };
 		C05E94B129AB468A00C1DEE4 /* GameModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05E94B029AB468A00C1DEE4 /* GameModeViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C0003D0429AF4D3600B3AFE8 /* ColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSet.swift; sourceTree = "<group>"; };
 		C05E94AC29AB3F8B00C1DEE4 /* TimeModeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeModeCollectionViewCell.swift; sourceTree = "<group>"; };
 		C05E94AD29AB3F8B00C1DEE4 /* TimeModeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeModeCollectionViewCell.xib; sourceTree = "<group>"; };
 		C05E94B029AB468A00C1DEE4 /* GameModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModeViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				C0F3874B2996498E00EF5B1E /* Assets.xcassets */,
 				C0F3874D2996498E00EF5B1E /* LaunchScreen.storyboard */,
 				C073C30C299E5CB100E0A2C2 /* Extenstions.swift */,
+				C0003D0429AF4D3600B3AFE8 /* ColorSet.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				C0F3875F29981F2100EF5B1E /* TimerSetupView.swift in Sources */,
 				C073C30D299E5CB100E0A2C2 /* Extenstions.swift in Sources */,
 				C0F387452996498C00EF5B1E /* SceneDelegate.swift in Sources */,
+				C0003D0529AF4D3600B3AFE8 /* ColorSet.swift in Sources */,
 				C073C319299F5AB200E0A2C2 /* SettingsTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
