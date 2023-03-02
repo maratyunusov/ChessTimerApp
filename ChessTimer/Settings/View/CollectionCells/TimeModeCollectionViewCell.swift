@@ -21,13 +21,17 @@ final class TimeModeCollectionViewCell: UICollectionViewCell {
         layer.shadowOffset = CGSize(width: 5, height: 5)
         layer.shadowRadius = 5
         layer.shadowOpacity = 0.5
+        
+        descriptionLabel.textColor = .tabBarItemAccent
+        timeLabel.textColor = .tabBarItemAccent
+        minutesTextLabel.textColor = .tabBarItemAccent
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        descriptionLabel.textColor = .tabBarItemAccent
-        timeLabel.textColor = .tabBarItemAccent
-        minutesTextLabel.textColor = .tabBarItemAccent
+//        descriptionLabel.textColor = .tabBarItemAccent
+//        timeLabel.textColor = .tabBarItemAccent
+//        minutesTextLabel.textColor = .tabBarItemAccent
     }
     
 }
