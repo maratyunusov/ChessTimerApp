@@ -202,7 +202,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     }
     
     @objc private func firstPlayerTap() {
-        if secondPlayerSideView.isActivePicker == false {
+        if secondPlayerSideView.isActivePicker == false && firstPlayerSideView.isActivePicker == false {
             firstPlayerSideView.setupTimeButton.isHidden = true
             secondPlayerSideView.setupTimeButton.isHidden = true
             firstPlayerSideView.tapStartLabel.isHidden = true
@@ -218,7 +218,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     }
     
     @objc private func secondPlayerTap() {
-        if firstPlayerSideView.isActivePicker == false {
+        if firstPlayerSideView.isActivePicker == false && secondPlayerSideView.isActivePicker == false {
             firstPlayerSideView.setupTimeButton.isHidden = true
             secondPlayerSideView.setupTimeButton.isHidden = true
             firstPlayerSideView.tapStartLabel.isHidden = true
@@ -355,6 +355,10 @@ extension MainViewController {
         pauseButton.backgroundColor = .white
         pauseButton.layer.borderWidth = 0.2
         pauseButton.layer.borderColor = UIColor.systemGray2.withAlphaComponent(1).cgColor
+        pauseButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        pauseButton.layer.shadowRadius = 10
+        pauseButton.layer.shadowOpacity = 1
+        pauseButton.layer.shadowColor = UIColor.black.cgColor
         
         //Setting Button
         settingButton.setImage(UIImage(systemName: "gear"), for: .normal)
@@ -369,6 +373,10 @@ extension MainViewController {
         settingButton.backgroundColor = .white
         settingButton.layer.borderWidth = 0.2
         settingButton.layer.borderColor = UIColor.systemGray2.withAlphaComponent(1).cgColor
+        settingButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        settingButton.layer.shadowRadius = 10
+        settingButton.layer.shadowOpacity = 1
+        settingButton.layer.shadowColor = UIColor.black.cgColor
         
         //Restart Button
         restartButton.setImage(UIImage(systemName: "gobackward"), for: .normal)
@@ -379,11 +387,14 @@ extension MainViewController {
                                                      bottom: restartButton.frame.width / 1.2,
                                                      right: restartButton.frame.width / 1.2
         )
-        restartButton.clipsToBounds = true
         restartButton.layer.cornerRadius = restartButton.frame.width / 2
         restartButton.backgroundColor = .white
         restartButton.layer.borderWidth = 0.2
         restartButton.layer.borderColor = UIColor.systemGray2.withAlphaComponent(1).cgColor
+        restartButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        restartButton.layer.shadowRadius = 10
+        restartButton.layer.shadowOpacity = 1
+        restartButton.layer.shadowColor = UIColor.black.cgColor
     }
 }
 
