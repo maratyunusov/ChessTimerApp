@@ -94,10 +94,6 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
-    
-    private func changeColorStyle(inactiveCell: UIColor, activeCell: UIColor) {
-        
-    }
   
     //MARK: - DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -109,7 +105,10 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         cell.descriptionLabel.text = timeModes[indexPath.row].description
         cell.timeLabel.text = timeModes[indexPath.row].time
         if indexPath == lastIndexActive {
-            cell.backgroundColor = #colorLiteral(red: 0.482352972, green: 0.482352972, blue: 0.482352972, alpha: 1)
+            cell.backgroundColor = #colorLiteral(red: 0.6642269492, green: 0.6642268896, blue: 0.6642268896, alpha: 1)
+            cell.timeLabel.textColor = .white
+            cell.minutesTextLabel.textColor = .white
+            cell.descriptionLabel.textColor = .white
         }
         return cell
     }
@@ -122,18 +121,16 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         
         if lastIndexActive != indexPath {
             guard let activeCell = collectionView.cellForItem(at: indexPath) as? TimeModeCollectionViewCell else { return }
-            activeCell.backgroundColor = #colorLiteral(red: 0.482352972, green: 0.482352972, blue: 0.482352972, alpha: 1)
+            activeCell.backgroundColor = #colorLiteral(red: 0.6642269492, green: 0.6642268896, blue: 0.6642268896, alpha: 1)
             activeCell.timeLabel.textColor = .white
             activeCell.minutesTextLabel.textColor = .white
             activeCell.descriptionLabel.textColor = .white
-            activeCell.layer.masksToBounds = true
             
             guard let inActiveCell = collectionView.cellForItem(at: lastIndexActive) as? TimeModeCollectionViewCell else { return }
-            inActiveCell.backgroundColor = #colorLiteral(red: 0.6627451181, green: 0.6627451181, blue: 0.6627451181, alpha: 1)
+            inActiveCell.backgroundColor = #colorLiteral(red: 1, green: 0.9999999404, blue: 0.9999999404, alpha: 1)
             inActiveCell.timeLabel.textColor = .tabBarItemAccent
             inActiveCell.minutesTextLabel.textColor = .tabBarItemAccent
             inActiveCell.descriptionLabel.textColor = .tabBarItemAccent
-            inActiveCell.layer.masksToBounds = false
             lastIndexActive = indexPath
         }
     }

@@ -239,11 +239,11 @@ extension MainViewController {
     
     //MARK: - Alerts
     private func showAlertRestartConfirm(completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "Restart", message: "Are you sure?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "RESTART", message: "", preferredStyle: .alert)
         let actionConfirme = UIAlertAction(title: "Confirme", style: .default) { confirme in
             completion()
         }
-        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel)
+        let actionCancel = UIAlertAction(title: "Cancel", style: .default)
         alert.addAction(actionConfirme)
         alert.addAction(actionCancel)
         present(alert, animated: true)

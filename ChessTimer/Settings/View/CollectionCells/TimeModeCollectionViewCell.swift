@@ -17,7 +17,7 @@ final class TimeModeCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.cornerRadius = frame.width / 15
+        layer.cornerRadius = frame.width / 4
         layer.shadowOffset = CGSize(width: 5, height: 5)
         layer.shadowRadius = 5
         layer.shadowOpacity = 0.5

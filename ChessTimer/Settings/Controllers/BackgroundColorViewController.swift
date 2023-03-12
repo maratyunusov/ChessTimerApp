@@ -35,7 +35,7 @@ final class BackgroundColorViewController: UIViewController {
     
     private let didChooseButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Choose", for: .normal)
+        button.setTitle("Save", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -47,7 +47,7 @@ final class BackgroundColorViewController: UIViewController {
         
         scrollView.delegate = self
         
-        didChooseButton.addTarget(self, action: #selector(tapChooseButton), for: .touchUpInside)
+        didChooseButton.addTarget(self, action: #selector(tapSaveButton), for: .touchUpInside)
         pageControl.addTarget(self, action: #selector(pageControlDidChange), for: .valueChanged)
     }
     
@@ -59,7 +59,7 @@ final class BackgroundColorViewController: UIViewController {
     }
     
     //MARK: - Targets
-    @objc private func tapChooseButton() {
+    @objc private func tapSaveButton() {
         delegate?.changeBackgroundStyle(index: pageControl.currentPage)
         UserDefaults.standard.set(pageControl.currentPage, forKey: "currentStyle")
         dismiss(animated: true)
