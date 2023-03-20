@@ -11,6 +11,9 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     
     weak var delegate: MainViewProtocol?
     
+    private var activeCellColor: UIColor = #colorLiteral(red: 0.6642269492, green: 0.6642268896, blue: 0.6642268896, alpha: 1)
+    private var currentPageStyle = UserDefaults.standard.integer(forKey: "currentStyle")
+    
     private var time: Double = 0.0
     
     private let timeModes: [TimeModel] = [TimeModel(description: "Longer", time: "60"),
@@ -34,6 +37,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         super.viewDidLoad()
         setupCollectionView()
         setupStartButton()
+        changeThemeColor()
         
         lastIndexActive.row = UserDefaults.standard.integer(forKey: "indexPathRow")
         time = UserDefaults.standard.double(forKey: "time")
@@ -51,6 +55,21 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     @objc func tapStart() {
         delegate?.setChooseTimerMode(time: time)
         dismiss(animated: true)
+    }
+    
+    private func changeThemeColor() {
+        switch currentPageStyle {
+        case 0:
+            activeCellColor = ColorSet.classic2
+            startButton.backgroundColor = ColorSet.classic2
+        case 1:
+            activeCellColor = ColorSet.styleOne2
+            startButton.backgroundColor = ColorSet.styleOne2
+        case 2:
+            activeCellColor = ColorSet.styleTwo2
+            startButton.backgroundColor = ColorSet.styleTwo2
+        default: break
+        }
     }
     
     //MARK: - Configure UI
@@ -79,7 +98,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     private func setupStartButton() {
         view.addSubview(startButton)
         startButton.setTitle("START", for: .normal)
-        startButton.setTitleColor(.tabBarItemAccent, for: .normal)
+        startButton.setTitleColor(.white, for: .normal)
         startButton.translatesAutoresizingMaskIntoConstraints = false
         startButton.backgroundColor = .mainWhite
         startButton.layer.cornerRadius = 50 / 2
@@ -105,7 +124,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         cell.descriptionLabel.text = timeModes[indexPath.row].description
         cell.timeLabel.text = timeModes[indexPath.row].time
         if indexPath == lastIndexActive {
-            cell.backgroundColor = #colorLiteral(red: 0.6642269492, green: 0.6642268896, blue: 0.6642268896, alpha: 1)
+            cell.backgroundColor = activeCellColor
             cell.timeLabel.textColor = .white
             cell.minutesTextLabel.textColor = .white
             cell.descriptionLabel.textColor = .white
@@ -121,7 +140,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         
         if lastIndexActive != indexPath {
             guard let activeCell = collectionView.cellForItem(at: indexPath) as? TimeModeCollectionViewCell else { return }
-            activeCell.backgroundColor = #colorLiteral(red: 0.6642269492, green: 0.6642268896, blue: 0.6642268896, alpha: 1)
+            activeCell.backgroundColor = activeCellColor
             activeCell.timeLabel.textColor = .white
             activeCell.minutesTextLabel.textColor = .white
             activeCell.descriptionLabel.textColor = .white

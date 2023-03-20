@@ -25,6 +25,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     
     var mainPresenter: MainViewPresenterProtocol?
     
+    private var start: Bool = false
     private var currentTime: Double = 0.0
     fileprivate var currentStyle: PlayerSideColor = .classic
     var currentBackgroundStyle: (UIColor, UIColor, UIColor)?
@@ -106,6 +107,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     
     //MARK: - Protocol methods
     func didStartTimer() {
+        start = true
         if !isTimerDidStart {
             mainPresenter?.startTimerSecondPlayer()
             mainPresenter?.pauseTimerFirstPlayer()
@@ -162,7 +164,15 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
         if let style = PlayerSideColor.init(rawValue: index) {
             currentStyle = style
             changePlayerSideColor(style: style)
-            
+
+            guard start else { return }
+            if isTimerDidStart {
+                firstPlayerSideView.backgroundColor = currentBackgroundStyle?.2
+                secondPlayerSideView.backgroundColor = currentBackgroundStyle?.1
+            } else {
+                secondPlayerSideView.backgroundColor = currentBackgroundStyle?.2
+                firstPlayerSideView.backgroundColor = currentBackgroundStyle?.0
+            }
         }
     }
     
@@ -250,6 +260,7 @@ extension MainViewController {
     }
     
     private func restartGameUpdateUI() {
+        start = false
         mainPresenter?.restart()
         isTimerDidStart = false
         firstPlayerSideView.isUserInteractionEnabled = true

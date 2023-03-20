@@ -11,12 +11,24 @@ final class SettingsTabBarController: UITabBarController {
     
     let gameModeVC = GameModeViewController()
     let backgroundColorVC = BackgroundColorViewController()
+    
+    let notificationCenter = NotificationCenter.default
+    
+    private var currentPageStyle = UserDefaults.standard.integer(forKey: "currentStyle")
    
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
-        setTabBarAppearance()
+        setTabBarAppearance(indexColor: currentPageStyle)
+        
+        notificationCenter.addObserver(self, selector: #selector(changeColor), name: .changeThemeColorNotification, object: nil)
+    }
+    
+    @objc func changeColor(notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: Int] else { return }
+        guard let indexColor = userInfo["index"] else { return }
+        currentPageStyle = indexColor
     }
    
     //MARK: - Configure TabBarContoller
@@ -36,9 +48,9 @@ final class SettingsTabBarController: UITabBarController {
         return viewController
     }
     
-    private func setTabBarAppearance() {
+    private func setTabBarAppearance(indexColor: Int) {
         let positionOnX: CGFloat = 10
-        let positionOnY: CGFloat = 14
+        let positionOnY: CGFloat = 10
         let width = tabBar.bounds.width - positionOnX * 2
         let height = tabBar.bounds.height + positionOnY * 2
         
@@ -55,9 +67,23 @@ final class SettingsTabBarController: UITabBarController {
         tabBar.itemWidth = width / 5
         tabBar.itemPositioning = .centered
         
-        roundLayer.fillColor = UIColor.mainWhite.cgColor
-        tabBar.tintColor = .tabBarItemAccent
-        tabBar.unselectedItemTintColor = .tabBarItemLight
-        tabBar.barTintColor = .clear
+        switch indexColor {
+        case 0:
+            roundLayer.fillColor = ColorSet.classic2.cgColor
+            tabBar.tintColor = .white
+            tabBar.unselectedItemTintColor = .mainWhite
+            tabBar.barTintColor = .clear
+        case 1:
+            roundLayer.fillColor = ColorSet.styleOne2.cgColor
+            tabBar.tintColor = .white
+            tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8374214172, green: 0.8374213576, blue: 0.8374213576, alpha: 1)
+            tabBar.barTintColor = .clear
+        case 2:
+            roundLayer.fillColor = ColorSet.styleTwo2.cgColor
+            tabBar.tintColor = .white
+            tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8374214172, green: 0.8374213576, blue: 0.8374213576, alpha: 1)
+            tabBar.barTintColor = .clear
+        default: break
+        }
     }
 }

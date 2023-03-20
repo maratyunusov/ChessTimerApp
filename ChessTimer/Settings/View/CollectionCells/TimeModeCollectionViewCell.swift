@@ -25,6 +25,7 @@ final class TimeModeCollectionViewCell: UICollectionViewCell {
         descriptionLabel.textColor = .tabBarItemAccent
         timeLabel.textColor = .tabBarItemAccent
         minutesTextLabel.textColor = .tabBarItemAccent
+        //setupBackGroundColor()
     }
     
     override func layoutSubviews() {
@@ -32,6 +33,19 @@ final class TimeModeCollectionViewCell: UICollectionViewCell {
 //        descriptionLabel.textColor = .tabBarItemAccent
 //        timeLabel.textColor = .tabBarItemAccent
 //        minutesTextLabel.textColor = .tabBarItemAccent
+    }
+    
+    private func setupBackGroundColor() {
+        let index = UserDefaults.standard.integer(forKey: "currentStyle") 
+        switch index {
+        case 0:
+            backgroundColor = ColorSet.classic2
+        case 1:
+            backgroundColor = ColorSet.styleOne2
+        case 2:
+            backgroundColor = ColorSet.styleTwo2
+        default: break
+        }
     }
     
 }

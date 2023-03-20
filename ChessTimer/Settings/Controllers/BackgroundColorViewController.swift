@@ -14,9 +14,10 @@ protocol BackgroundStyleDelegate: AnyObject {
 final class BackgroundColorViewController: UIViewController {
     
     weak var delegate: BackgroundStyleDelegate?
-    
     private var currentPageStyle = UserDefaults.standard.integer(forKey: "currentStyle")
     private let countPageStyle: Int = 3
+    
+    let notificationCenter = NotificationCenter.default
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -33,7 +34,7 @@ final class BackgroundColorViewController: UIViewController {
         return pageControl
     }()
     
-    private let didChooseButton: UIButton = {
+    private let didSaveButton: UIButton = {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -43,11 +44,11 @@ final class BackgroundColorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 1, green: 0.9999999404, blue: 0.9999999404, alpha: 1)
-        view.addSubviews(scrollView, pageControl, didChooseButton)
+        view.addSubviews(scrollView, pageControl, didSaveButton)
         
         scrollView.delegate = self
         
-        didChooseButton.addTarget(self, action: #selector(tapSaveButton), for: .touchUpInside)
+        didSaveButton.addTarget(self, action: #selector(tapSaveButton), for: .touchUpInside)
         pageControl.addTarget(self, action: #selector(pageControlDidChange), for: .valueChanged)
     }
     
@@ -82,10 +83,10 @@ final class BackgroundColorViewController: UIViewController {
             pageControl.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             pageControl.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1/3),
             
-            didChooseButton.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 20),
-            didChooseButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            didChooseButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1/2),
-            didChooseButton.heightAnchor.constraint(equalToConstant: 50)
+            didSaveButton.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 20),
+            didSaveButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            didSaveButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1/2),
+            didSaveButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     
         pageControl.layer.cornerRadius = pageControl.frame.width / 10
@@ -93,14 +94,30 @@ final class BackgroundColorViewController: UIViewController {
         
         scrollView.clipsToBounds = false
         
-        didChooseButton.backgroundColor = .mainWhite
-        didChooseButton.setTitleColor(.tabBarItemAccent, for: .normal)
-        didChooseButton.layer.cornerRadius = 50 / 2
-        didChooseButton.layer.shadowOffset = CGSize(width: 0, height: 5)
-        didChooseButton.layer.shadowRadius = 5
-        didChooseButton.layer.shadowOpacity = 0.5
+        didSaveButton.setTitleColor(.white, for: .normal)
+        didSaveButton.layer.cornerRadius = 50 / 2
+        didSaveButton.layer.shadowOffset = CGSize(width: 0, height: 5)
+        didSaveButton.layer.shadowRadius = 5
+        didSaveButton.layer.shadowOpacity = 0.5
         
         configureScrollView()
+        
+        setupColor()
+    }
+    
+    private func setupColor() {
+        switch currentPageStyle {
+        case 0:
+            pageControl.backgroundColor = ColorSet.classic2
+            didSaveButton.backgroundColor = ColorSet.classic2
+        case 1:
+            pageControl.backgroundColor = ColorSet.styleOne2
+            didSaveButton.backgroundColor = ColorSet.styleOne2
+        case 2:
+            pageControl.backgroundColor = ColorSet.styleTwo2
+            didSaveButton.backgroundColor = ColorSet.styleTwo2
+        default: break
+        }
     }
     
     private func configureScrollView() {
@@ -125,5 +142,7 @@ final class BackgroundColorViewController: UIViewController {
 extension BackgroundColorViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(floorf(Float(scrollView.contentOffset.x) / Float(scrollView.frame.size.width)))
+        //notificationCenter.post(name: .changeThemeColorNotification, object: self, userInfo: ["index": pageControl.currentPage])
+        //setupColor()
     }
 }
