@@ -128,6 +128,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         
         addConstraints()
         setupStackView()
+        configureButtons()
         setupTitlePickerStackView()
         
         setFontForLabel(label: timerLabel, maxFontSize: 100, minFontSize: 5, maxLines: 2)
@@ -198,10 +199,10 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
             setupTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/12),
             setupTimeButton.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1/14),
             
-            stackViewChoosesButtons.topAnchor.constraint(equalTo: timerPickerView.bottomAnchor, constant: 10),
-            stackViewChoosesButtons.leftAnchor.constraint(equalTo: leftAnchor, constant: 30),
-            stackViewChoosesButtons.rightAnchor.constraint(equalTo: rightAnchor, constant: -30),
-            stackViewChoosesButtons.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30),
+            stackViewChoosesButtons.topAnchor.constraint(equalTo: timerPickerView.bottomAnchor, constant: 50),
+            stackViewChoosesButtons.leftAnchor.constraint(equalTo: leftAnchor, constant: 25),
+            stackViewChoosesButtons.rightAnchor.constraint(equalTo: rightAnchor, constant: -25),
+            stackViewChoosesButtons.heightAnchor.constraint(equalToConstant: 50),
             
             titlePickerStackView.topAnchor.constraint(equalTo: timerPickerView.bottomAnchor, constant: -10),
             titlePickerStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -210,8 +211,26 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         ])
     }
     
+    private func configureButtons() {
+        saveButton.backgroundColor = .white
+        saveButton.setTitleColor(.tabBarItemAccent, for: .normal)
+        saveButton.layer.cornerRadius = 50 / 2
+        saveButton.layer.shadowOffset = CGSize(width: 0, height: 5)
+        saveButton.layer.shadowRadius = 5
+        saveButton.layer.shadowOpacity = 0.5
+        
+        cancelButton.backgroundColor = .white
+        cancelButton.setTitleColor(.tabBarItemAccent, for: .normal)
+        cancelButton.layer.cornerRadius = 50 / 2
+        cancelButton.layer.shadowOffset = CGSize(width: 0, height: 5)
+        cancelButton.layer.shadowRadius = 5
+        cancelButton.layer.shadowOpacity = 0.5
+        
+    }
+    
     private func setupStackView() {
         stackViewChoosesButtons.isHidden = true
+        stackViewChoosesButtons.spacing = 30
         stackViewChoosesButtons.addArrangedSubview(saveButton)
         stackViewChoosesButtons.addArrangedSubview(cancelButton)
     }

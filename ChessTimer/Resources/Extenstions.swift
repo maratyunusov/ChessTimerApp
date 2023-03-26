@@ -26,3 +26,7 @@ extension UIColor {
         #colorLiteral(red: 0.2605186105, green: 0.2605186105, blue: 0.2605186105, alpha: 0.5)
     }
 }
+
+extension NSNotification.Name {
+    static let changeThemeColorNotification = NSNotification.Name.init("changeThemeColorNotification")
+}

@@ -19,6 +19,8 @@ final class CountdownTimer {
     public var seconds: Double = 300.0
     public var duration: Double = 300.0
     
+    private var counterTimer: Int = 0
+    
     lazy var timer: Timer = {
         let timer = Timer()
         return timer
@@ -43,7 +45,7 @@ final class CountdownTimer {
     }
     
     fileprivate func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
     
     @objc fileprivate func updateTimer() {
@@ -51,8 +53,12 @@ final class CountdownTimer {
             timer.invalidate()
             timerDone()
         } else {
-            duration -= 1
-            delegate?.updateTimer()
+            if counterTimer == 100 {
+                counterTimer = 0
+                duration -= 1
+                delegate?.updateTimer()
+            }
+            counterTimer += 1
         }
     }
     
