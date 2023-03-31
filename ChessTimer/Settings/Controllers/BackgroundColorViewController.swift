@@ -36,7 +36,7 @@ final class BackgroundColorViewController: UIViewController {
     
     private let didSaveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Save", for: .normal)
+        button.setTitle("SAVE", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
