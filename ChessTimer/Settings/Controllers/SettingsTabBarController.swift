@@ -11,6 +11,7 @@ final class SettingsTabBarController: UITabBarController {
     
     let gameModeVC = GameModeViewController()
     let backgroundColorVC = BackgroundColorViewController()
+    let soundSettingVC = SoundSettingViewController()
     
     let notificationCenter = NotificationCenter.default
     
@@ -38,7 +39,10 @@ final class SettingsTabBarController: UITabBarController {
                                       image: UIImage(systemName: "hare")),
                            generateVC(backgroundColorVC,
                                       title: "Style",
-                                      image: UIImage(systemName: "paintpalette"))
+                                      image: UIImage(systemName: "paintpalette")),
+                           generateVC(soundSettingVC,
+                                      title: "Sound",
+                                      image: UIImage(systemName: "speaker.wave.3"))
         ]
     }
     

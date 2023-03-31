@@ -41,7 +41,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     public let timerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "05:00"
+        label.text = "10:00"
         label.textColor = .white
         label.textAlignment = .center
         return label

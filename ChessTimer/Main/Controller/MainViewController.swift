@@ -201,7 +201,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
         guard let settingsVC = SettingsBuilder.build() as? SettingsTabBarController else { return }
         settingsVC.gameModeVC.delegate = self
         settingsVC.backgroundColorVC.delegate = self
-        settingsVC.modalTransitionStyle = .flipHorizontal
+        settingsVC.modalTransitionStyle = .coverVertical
         present(settingsVC, animated: true)
     }
     
@@ -212,6 +212,14 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     }
     
     @objc private func firstPlayerTap() {
+        didPlayerTapped(isTimer: true)
+    }
+    
+    @objc private func secondPlayerTap() {
+        didPlayerTapped(isTimer: false)
+    }
+    
+    private func didPlayerTapped(isTimer: Bool) {
         if secondPlayerSideView.isActivePicker == false && firstPlayerSideView.isActivePicker == false {
             firstPlayerSideView.setupTimeButton.isHidden = true
             secondPlayerSideView.setupTimeButton.isHidden = true
@@ -221,23 +229,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
             settingButton.isHidden = true
             restartButton.isHidden = true
             isHiddenPauseButton = false
-            isTimerDidStart = true
-            
-            didStartTimer()
-        }
-    }
-    
-    @objc private func secondPlayerTap() {
-        if firstPlayerSideView.isActivePicker == false && secondPlayerSideView.isActivePicker == false {
-            firstPlayerSideView.setupTimeButton.isHidden = true
-            secondPlayerSideView.setupTimeButton.isHidden = true
-            firstPlayerSideView.tapStartLabel.isHidden = true
-            secondPlayerSideView.tapStartLabel.isHidden = true
-            pauseButton.isHidden = false
-            settingButton.isHidden = true
-            restartButton.isHidden = true
-            isHiddenPauseButton = false
-            isTimerDidStart = false
+            isTimerDidStart = isTimer
             
             didStartTimer()
         }
