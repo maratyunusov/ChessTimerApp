@@ -52,6 +52,11 @@ final class BackgroundColorViewController: UIViewController {
         pageControl.addTarget(self, action: #selector(pageControlDidChange), for: .valueChanged)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewDidLayoutSubviews()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         addConstraints()

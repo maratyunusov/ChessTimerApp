@@ -8,12 +8,12 @@
 import UIKit
 
 protocol SoundSettingViewProtocol: AnyObject {
-    func updateView()
+    func updateView(content: [[String: Bool]])
 }
 
 final class SoundSettingViewController: UIViewController, SoundSettingViewProtocol {
     
-    private let content: [[String]] = [["Sound", "Time left warning"],["Vibration"]]
+    private var content: [[String: Bool]] = []
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     var presenter: SoundSettingProtocol?
@@ -35,8 +35,9 @@ final class SoundSettingViewController: UIViewController, SoundSettingViewProtoc
         tableView.delegate = self
     }
     
-    func updateView() {
-        tableView.reloadData()
+    func updateView(content: [[String : Bool]]) {
+        self.content = content
+        //tableView.reloadData()
     }
 }
 
@@ -51,39 +52,43 @@ extension SoundSettingViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SoundSettingTableViewCell.identifierCell, for: indexPath) as? SoundSettingTableViewCell else { return UITableViewCell()}
-        cell.configure(name: content[indexPath.section][indexPath.row])
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SoundSettingTableViewCell.identifierCell, for: indexPath) as? SoundSettingTableViewCell else { return UITableViewCell() }
+        let array = Array(content[indexPath.section]).sorted { $0.key < $1.key }
+        
+        cell.configure(name: array[indexPath.row].key)
+        cell.switchMode.isOn = array[indexPath.row].value
         cell.selectionStyle = .none
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let section = [indexPath.section]
-        let row = [indexPath.row]
-        print(section, row)
-        presenter?.didSelectCell(index: 1)
-    }
-    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Sounds"
-        } else if section == 1 {
-            return "Vibration"
+        switch section {
+        case 0: return "SOUND"
+        case 1: return "TAPTIC"
+        default: break
         }
         return ""
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel?.font = .systemFont(ofSize: 20, weight: .light)
             header.textLabel?.textColor = .tabBarItemAccent
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        presenter?.didSelectCell(section: section, row: row)
     }
 }

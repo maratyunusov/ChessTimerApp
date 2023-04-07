@@ -18,6 +18,13 @@ class SoundSettingTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupColor()
+        nameLabel.font = .systemFont(ofSize: 25, weight: .regular)
+        switchMode.addTarget(self, action: #selector(switchModed), for: .valueChanged)
+    }
+    
+    @objc func switchModed(sender: UISwitch) {
+        
+        print(sender.isOn)
     }
     
     func configure(name: String) {

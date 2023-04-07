@@ -28,46 +28,36 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     
     private var collectionView: UICollectionView?
     
-    private var startButton: UIButton = {
-        let button = UIButton()
-        return button
+    private var swipeDownLabel: UILabel = {
+        let label = UILabel()
+        return label
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        setupStartButton()
+        setupSwipeDownLabel()
         changeThemeColor()
         
         lastIndexActive.row = UserDefaults.standard.integer(forKey: "indexPathRow")
         time = UserDefaults.standard.double(forKey: "time")
-        startButton.addTarget(self, action: #selector(tapStart), for: .touchUpInside)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("disappear")
+        delegate?.setChooseTimerMode(time: time)
         UserDefaults.standard.setValue(time, forKey: "time")
         UserDefaults.standard.setValue(lastIndexActive.row, forKey: "indexPathRow")
-    }
-    
-    //MARK: - Targets
-    @objc func tapStart() {
-        delegate?.setChooseTimerMode(time: time)
-        dismiss(animated: true)
     }
     
     private func changeThemeColor() {
         switch currentPageStyle {
         case 0:
             activeCellColor = ColorSet.classic2
-            startButton.backgroundColor = ColorSet.classic2
         case 1:
             activeCellColor = ColorSet.styleOne2
-            startButton.backgroundColor = ColorSet.styleOne2
         case 2:
             activeCellColor = ColorSet.styleTwo2
-            startButton.backgroundColor = ColorSet.styleTwo2
         default: break
         }
     }
@@ -95,22 +85,23 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     //setup start button
-    private func setupStartButton() {
-        view.addSubview(startButton)
-        startButton.setTitle("START", for: .normal)
-        startButton.setTitleColor(.white, for: .normal)
-        startButton.translatesAutoresizingMaskIntoConstraints = false
-        startButton.backgroundColor = .mainWhite
-        startButton.layer.cornerRadius = 50 / 2
-        startButton.layer.shadowOffset = CGSize(width: 0, height: 5)
-        startButton.layer.shadowRadius = 5
-        startButton.layer.shadowOpacity = 0.5
+    private func setupSwipeDownLabel() {
+        view.addSubview(swipeDownLabel)
+        swipeDownLabel.numberOfLines = 0
+        swipeDownLabel.font = .systemFont(ofSize: 20, weight: .light)
+        swipeDownLabel.textAlignment = .center
+        swipeDownLabel.textColor = .tabBarItemAccent
+        swipeDownLabel.translatesAutoresizingMaskIntoConstraints = false
+        swipeDownLabel.text = "Swipe down for start"
+        swipeDownLabel.layer.shadowOffset = CGSize(width: 0, height: 5)
+        swipeDownLabel.layer.shadowRadius = 5
+        swipeDownLabel.layer.shadowOpacity = 0.7
         
         NSLayoutConstraint.activate([
-            startButton.widthAnchor.constraint(equalToConstant: view.frame.width / 3),
-            startButton.heightAnchor.constraint(equalToConstant: 50),
-            startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
-            startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            swipeDownLabel.widthAnchor.constraint(equalToConstant: view.frame.width),
+            swipeDownLabel.heightAnchor.constraint(equalToConstant: 50),
+            swipeDownLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            swipeDownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
   
