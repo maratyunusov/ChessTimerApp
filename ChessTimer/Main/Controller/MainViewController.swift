@@ -133,13 +133,15 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     }
     
     func setChooseTimerMode(time: Double) {
-        firstPlayerSideView.time = time
-        secondPlayerSideView.time = time
-        mainPresenter?.setTime(firstPlayerTimer: time, secondPlayerTimer: time)
-        currentTime = time
-        
-        changePlayerSideColor(style: currentStyle)
-        restartGameUpdateUI()
+        if !start {
+            firstPlayerSideView.time = time
+            secondPlayerSideView.time = time
+            mainPresenter?.setTime(firstPlayerTimer: time, secondPlayerTimer: time)
+            currentTime = time
+            
+            changePlayerSideColor(style: currentStyle)
+            restartGameUpdateUI()
+        }
     }
     
     func updateTimerPlayer(first: Double, second: Double) {

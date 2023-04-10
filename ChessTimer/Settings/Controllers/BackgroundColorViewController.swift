@@ -52,6 +52,12 @@ final class BackgroundColorViewController: UIViewController {
         pageControl.addTarget(self, action: #selector(pageControlDidChange), for: .valueChanged)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print("diddisappera backColorVC")
+        viewDidLayoutSubviews()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         addConstraints()
@@ -61,9 +67,9 @@ final class BackgroundColorViewController: UIViewController {
     
     //MARK: - Targets
     @objc private func tapSaveButton() {
-        delegate?.changeBackgroundStyle(index: pageControl.currentPage)
-        UserDefaults.standard.set(pageControl.currentPage, forKey: "currentStyle")
-        dismiss(animated: true)
+//        delegate?.changeBackgroundStyle(index: pageControl.currentPage)
+//        UserDefaults.standard.set(pageControl.currentPage, forKey: "currentStyle")
+//        dismiss(animated: true)
     }
     
     @objc private func pageControlDidChange(_ sender: UIPageControl) {
@@ -141,7 +147,10 @@ final class BackgroundColorViewController: UIViewController {
 //MARK: - EXTENSIONS
 extension BackgroundColorViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print(pageControl.currentPage)
         pageControl.currentPage = Int(floorf(Float(scrollView.contentOffset.x) / Float(scrollView.frame.size.width)))
+        delegate?.changeBackgroundStyle(index: pageControl.currentPage)
+        UserDefaults.standard.set(pageControl.currentPage, forKey: "currentStyle")
         //notificationCenter.post(name: .changeThemeColorNotification, object: self, userInfo: ["index": pageControl.currentPage])
         //setupColor()
     }
