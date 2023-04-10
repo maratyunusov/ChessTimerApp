@@ -67,6 +67,7 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
     }
     
     func restart() {
+        time = (UserDefaults.standard.double(forKey: "time"), UserDefaults.standard.double(forKey: "time"))
         firstPlayerCountdownTimer.duration = time.0
         secondPlayerCountdownTimer.duration = time.1
         mainView?.updateTimerPlayer(first: time.0, second: time.1)

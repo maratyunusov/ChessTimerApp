@@ -43,11 +43,17 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         time = UserDefaults.standard.double(forKey: "time")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        delegate?.setChooseTimerMode(time: time)
         UserDefaults.standard.setValue(time, forKey: "time")
         UserDefaults.standard.setValue(lastIndexActive.row, forKey: "indexPathRow")
+        delegate?.setChooseTimerMode(time: time)
+        
     }
     
     private func changeThemeColor() {
@@ -92,7 +98,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         swipeDownLabel.textAlignment = .center
         swipeDownLabel.textColor = .tabBarItemAccent
         swipeDownLabel.translatesAutoresizingMaskIntoConstraints = false
-        swipeDownLabel.text = "Swipe down for start"
+        swipeDownLabel.text = "Swipe down to save and close"
         swipeDownLabel.layer.shadowOffset = CGSize(width: 0, height: 5)
         swipeDownLabel.layer.shadowRadius = 5
         swipeDownLabel.layer.shadowOpacity = 0.7
