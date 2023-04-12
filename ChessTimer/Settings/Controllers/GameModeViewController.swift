@@ -11,7 +11,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     
     weak var delegate: MainViewProtocol?
     
-    private var activeCellColor: UIColor = #colorLiteral(red: 0.6642269492, green: 0.6642268896, blue: 0.6642268896, alpha: 1)
+    private var activeCellColor: UIColor = .tabBarItemAccent
     private var currentPageStyle = UserDefaults.standard.integer(forKey: "currentStyle")
     
     private var time: Double = 0.0
@@ -41,11 +41,6 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         
         lastIndexActive.row = UserDefaults.standard.integer(forKey: "indexPathRow")
         time = UserDefaults.standard.double(forKey: "time")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -117,37 +112,58 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let model = TimeModel(description: timeModes[indexPath.row].description,
+                              time: timeModes[indexPath.row].time)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeModeCollectionViewCell.cellIdentifier, for: indexPath) as? TimeModeCollectionViewCell else { return UICollectionViewCell()}
-        cell.descriptionLabel.text = timeModes[indexPath.row].description
-        cell.timeLabel.text = timeModes[indexPath.row].time
+        cell.configureCell(model: model)
         if indexPath == lastIndexActive {
-            cell.backgroundColor = activeCellColor
-            cell.timeLabel.textColor = .white
-            cell.minutesTextLabel.textColor = .white
-            cell.descriptionLabel.textColor = .white
+            cell.layer.borderColor = activeCellColor.cgColor
+            cell.layer.borderWidth = 10
+            cell.timeLabel.textColor = .tabBarItemAccent
+            cell.minutesTextLabel.textColor = .tabBarItemAccent
+            cell.descriptionLabel.textColor = .tabBarItemAccent
         }
         return cell
     }
     
     //MARK: - Delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("lastIndexActive - \(lastIndexActive)")
+        print(indexPath)
+        
         if let time = Double(timeModes[indexPath.row].time) {
             self.time = time * 60
         }
         
         if lastIndexActive != indexPath {
-            guard let activeCell = collectionView.cellForItem(at: indexPath) as? TimeModeCollectionViewCell else { return }
-            activeCell.backgroundColor = activeCellColor
-            activeCell.timeLabel.textColor = .white
-            activeCell.minutesTextLabel.textColor = .white
-            activeCell.descriptionLabel.textColor = .white
             
+            //activeCel
+            guard let activeCell = collectionView.cellForItem(at: indexPath) as? TimeModeCollectionViewCell else { return }
+            
+            activeCell.layer.borderColor = activeCellColor.cgColor
+            activeCell.layer.borderWidth = 10
+            
+            activeCell.timeLabel.textColor = .tabBarItemAccent
+            activeCell.minutesTextLabel.textColor = .tabBarItemAccent
+            activeCell.descriptionLabel.textColor = .tabBarItemAccent
+            
+            //inAcitveCell
             guard let inActiveCell = collectionView.cellForItem(at: lastIndexActive) as? TimeModeCollectionViewCell else { return }
-            inActiveCell.backgroundColor = #colorLiteral(red: 1, green: 0.9999999404, blue: 0.9999999404, alpha: 1)
+            
+            inActiveCell.layer.borderColor = #colorLiteral(red: 0.9725490212, green: 0.9725490212, blue: 0.9725490212, alpha: 1).cgColor
+            
             inActiveCell.timeLabel.textColor = .tabBarItemAccent
             inActiveCell.minutesTextLabel.textColor = .tabBarItemAccent
             inActiveCell.descriptionLabel.textColor = .tabBarItemAccent
             lastIndexActive = indexPath
         }
+    }
+}
+
+//MARK: - Extensions
+extension GameModeViewController: BackgroundStyleDelegate {
+    func changeBackgroundStyle(index: Int) {
+        currentPageStyle = index
+        //changeThemeColor()
     }
 }

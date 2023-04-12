@@ -23,6 +23,12 @@ final class SoundSettingViewController: UIViewController, SoundSettingViewProtoc
         super.viewDidLoad()
         setupTableView()
         presenter = SoundSettingPresenter(view: self)
+        print("didload setupSoundVC")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
     }
     
     private func setupTableView() {

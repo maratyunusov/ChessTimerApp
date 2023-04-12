@@ -10,16 +10,22 @@ import UIKit
 class SoundSettingTableViewCell: UITableViewCell {
     
     static let identifierCell = "SoundSettingTableViewCell"
-    private var currentPageStyle = UserDefaults.standard.integer(forKey: "currentStyle")
+    private var currentPageStyle: Int?
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var switchMode: UISwitch!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupColor()
-        nameLabel.font = .systemFont(ofSize: 25, weight: .regular)
+        nameLabel.font = .systemFont(ofSize: 25, weight: .light)
         switchMode.addTarget(self, action: #selector(switchModed), for: .valueChanged)
+    }
+    
+    //MARK: - Layout subviews
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        currentPageStyle = UserDefaults.standard.integer(forKey: "currentStyle")
+        setupColor()
     }
     
     @objc func switchModed(sender: UISwitch) {
