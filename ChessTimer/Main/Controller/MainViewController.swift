@@ -201,8 +201,12 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     
     @objc private func tapSettingButton() {
         guard let settingsVC = SettingsBuilder.build() as? SettingsTabBarController else { return }
+        
         settingsVC.gameModeVC.delegate = self
-        settingsVC.backgroundColorVC.delegate = self
+        settingsVC.backgroundColorVC.delegateMainVC = self
+        settingsVC.backgroundColorVC.delegateSettingVC = settingsVC
+        settingsVC.backgroundColorVC.delegateGameModeVC = settingsVC.gameModeVC
+        
         settingsVC.modalTransitionStyle = .coverVertical
         present(settingsVC, animated: true)
     }
