@@ -206,6 +206,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
         settingsVC.backgroundColorVC.delegateMainVC = self
         settingsVC.backgroundColorVC.delegateSettingVC = settingsVC
         settingsVC.backgroundColorVC.delegateGameModeVC = settingsVC.gameModeVC
+        settingsVC.backgroundColorVC.delegateSoundSettingVC = settingsVC.soundSettingVC
         
         settingsVC.modalTransitionStyle = .coverVertical
         present(settingsVC, animated: true)

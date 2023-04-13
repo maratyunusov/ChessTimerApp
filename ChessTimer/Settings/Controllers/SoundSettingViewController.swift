@@ -23,12 +23,6 @@ final class SoundSettingViewController: UIViewController, SoundSettingViewProtoc
         super.viewDidLoad()
         setupTableView()
         presenter = SoundSettingPresenter(view: self)
-        print("didload setupSoundVC")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tableView.reloadData()
     }
     
     private func setupTableView() {
@@ -96,5 +90,12 @@ extension SoundSettingViewController: UITableViewDataSource, UITableViewDelegate
         let row = indexPath.row
         
         presenter?.didSelectCell(section: section, row: row)
+    }
+}
+
+//MARK: - Extensions
+extension SoundSettingViewController: BackgroundStyleDelegate {
+    func changeBackgroundStyle(index: Int) {
+        tableView.reloadData()
     }
 }
