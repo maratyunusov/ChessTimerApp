@@ -10,7 +10,6 @@ import UIKit
 final class TimeModeCollectionViewCell: UICollectionViewCell {
     
     static let cellIdentifier = "TimeModeCollectionViewCell"
-    var activeCellColor: UIColor?
     
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -28,21 +27,13 @@ final class TimeModeCollectionViewCell: UICollectionViewCell {
         minutesTextLabel.textColor = .tabBarItemAccent
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        layer.borderColor = #colorLiteral(red: 0.9725490212, green: 0.9725490212, blue: 0.9725490212, alpha: 1).cgColor
+    }
+    
     public func configureCell(model: TimeModel) {
         descriptionLabel.text = model.description
         timeLabel.text = model.time
-    }
-    
-    private func setupBackGroundColor() {
-        let index = UserDefaults.standard.integer(forKey: "currentStyle") 
-        switch index {
-        case 0:
-            activeCellColor = ColorSet.classic2
-        case 1:
-            activeCellColor = ColorSet.styleOne2
-        case 2:
-            activeCellColor = ColorSet.styleTwo2
-        default: break
-        }
     }
 }

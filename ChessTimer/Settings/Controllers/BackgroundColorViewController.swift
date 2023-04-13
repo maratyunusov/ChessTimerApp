@@ -21,8 +21,6 @@ final class BackgroundColorViewController: UIViewController {
     private var currentPageStyle = UserDefaults.standard.integer(forKey: "currentStyle")
     private let countPageStyle: Int = 3
     
-    let notificationCenter = NotificationCenter.default
-    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
@@ -132,6 +130,5 @@ extension BackgroundColorViewController: UIScrollViewDelegate {
         delegateSettingVC?.changeBackgroundStyle(index: pageControl.currentPage)
         delegateGameModeVC?.changeBackgroundStyle(index: pageControl.currentPage)
         delegateSoundSettingVC?.changeBackgroundStyle(index: pageControl.currentPage)
-        //notificationCenter.post(name: .changeThemeColorNotification, object: self, userInfo: ["index": pageControl.currentPage])
     }
 }

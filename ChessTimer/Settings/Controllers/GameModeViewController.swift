@@ -164,6 +164,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
 extension GameModeViewController: BackgroundStyleDelegate {
     func changeBackgroundStyle(index: Int) {
         currentPageStyle = index
-        //changeThemeColor()
+        changeThemeColor()
+        collectionView?.reloadData()
     }
 }
