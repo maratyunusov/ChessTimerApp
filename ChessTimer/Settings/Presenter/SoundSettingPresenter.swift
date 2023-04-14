@@ -15,6 +15,7 @@ protocol SoundSettingProtocol: AnyObject {
 final class SoundSettingPresenter: SoundSettingProtocol {
     
     var view: SoundSettingViewProtocol?
+    var soundManager: SoundsManager?
     
     private let content: [[String: Bool]] = [["Sound": true, "Time left warning": false],
                                              ["Vibration": true]]
@@ -29,7 +30,7 @@ final class SoundSettingPresenter: SoundSettingProtocol {
     }
     
     func didSelectCell(section: Int, row: Int) {
-        
+        print(section, row)
     }
     
     func updateTableView() {

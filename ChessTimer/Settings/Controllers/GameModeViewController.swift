@@ -48,7 +48,6 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
         UserDefaults.standard.setValue(time, forKey: "time")
         UserDefaults.standard.setValue(lastIndexActive.row, forKey: "indexPathRow")
         delegate?.setChooseTimerMode(time: time)
-        
     }
     
     private func changeThemeColor() {

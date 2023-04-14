@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 protocol MainViewProtocol: AnyObject {
     func setChooseTimerMode(time: Double)
@@ -208,7 +209,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
         settingsVC.backgroundColorVC.delegateGameModeVC = settingsVC.gameModeVC
         settingsVC.backgroundColorVC.delegateSoundSettingVC = settingsVC.soundSettingVC
         
-        settingsVC.modalTransitionStyle = .coverVertical
+        settingsVC.modalTransitionStyle = .flipHorizontal
         present(settingsVC, animated: true)
     }
     
@@ -220,10 +221,18 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     
     @objc private func firstPlayerTap() {
         didPlayerTapped(isTimer: true)
+        DispatchQueue.main.async {
+            SoundsManager.shared.playSwitchPlayer(url: SoundSet.switchPlayers1)
+        }
+        
     }
     
     @objc private func secondPlayerTap() {
         didPlayerTapped(isTimer: false)
+        DispatchQueue.main.async {
+            SoundsManager.shared.playSwitchPlayer(url: SoundSet.switchPlayers2)
+        }
+        
     }
     
     private func didPlayerTapped(isTimer: Bool) {
