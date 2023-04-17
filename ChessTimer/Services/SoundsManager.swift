@@ -11,7 +11,7 @@ import AVFoundation
 struct SoundsManager {
     static var shared = SoundsManager()
     
-    var isSoundsON: Bool = true
+    var isSoundsON: Bool = UserDefaults.standard.bool(forKey: "soundIsOn")
     
     var player: AVAudioPlayer?
     

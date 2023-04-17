@@ -13,7 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let firstStart: Bool = UserDefaults.standard.bool(forKey: "isFirstStart")
+        
+        if !firstStart {
+            UserDefaults.standard.set(true, forKey: "soundIsOn")
+            UserDefaults.standard.set(false, forKey: "timeLeftWarning")
+            UserDefaults.standard.set(true, forKey: "vibrationIsOn")
+        }
+        
         return true
     }
 

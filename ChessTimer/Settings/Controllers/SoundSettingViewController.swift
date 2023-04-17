@@ -16,7 +16,7 @@ final class SoundSettingViewController: UIViewController, SoundSettingViewProtoc
     private var content: [[String: Bool]] = []
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
-    var presenter: SoundSettingProtocol?
+    private var presenter: SoundSettingProtocol?
     
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
@@ -56,9 +56,21 @@ extension SoundSettingViewController: UITableViewDataSource, UITableViewDelegate
         let array = Array(content[indexPath.section]).sorted { $0.key < $1.key }
         
         cell.configure(name: array[indexPath.row].key)
-        cell.switchMode.isOn = array[indexPath.row].value
-        cell.selectionStyle = .none
+        
+        let switchView = UISwitch(frame: .zero)
+        switchView.setOn(array[indexPath.row].value, animated: true)
+        switchView.tag = indexPath.row
+        switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
+        
+        cell.accessoryView = switchView
+        
         return cell
+    }
+    
+    @objc func switchChanged(_ sender: UISwitch) {
+        if sender.tag == 0 {
+            sender.isOn ? presenter?.soundMode(isOn: true) : presenter?.soundMode(isOn: false)
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

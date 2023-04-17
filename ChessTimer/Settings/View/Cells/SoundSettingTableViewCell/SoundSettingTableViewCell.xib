@@ -18,28 +18,21 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZ0-Tg-eZv">
-                        <rect key="frame" x="10" y="10" width="346" height="31"/>
+                        <rect key="frame" x="10" y="10" width="41.333333333333336" height="31"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6GY-KR-PDA">
-                        <rect key="frame" x="371" y="10" width="51" height="31"/>
-                    </switch>
                 </subviews>
                 <constraints>
                     <constraint firstItem="WZ0-Tg-eZv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Rru-bR-E7P"/>
-                    <constraint firstItem="6GY-KR-PDA" firstAttribute="leading" secondItem="WZ0-Tg-eZv" secondAttribute="trailing" constant="15" id="TDw-o3-LJ1"/>
                     <constraint firstAttribute="bottom" secondItem="WZ0-Tg-eZv" secondAttribute="bottom" constant="10" id="bWU-Vy-I6L"/>
-                    <constraint firstAttribute="trailing" secondItem="6GY-KR-PDA" secondAttribute="trailing" constant="10" id="pOe-jq-i24"/>
                     <constraint firstItem="WZ0-Tg-eZv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="qtH-TV-S2S"/>
-                    <constraint firstItem="6GY-KR-PDA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="sx5-f2-kQm"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="nameLabel" destination="WZ0-Tg-eZv" id="ccz-l8-vyZ"/>
-                <outlet property="switchMode" destination="6GY-KR-PDA" id="XT5-7T-Ech"/>
             </connections>
             <point key="canvasLocation" x="161.83206106870227" y="-3.1690140845070425"/>
         </tableViewCell>
