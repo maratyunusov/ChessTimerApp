@@ -85,5 +85,6 @@ final class SettingsTabBarController: UITabBarController {
 extension SettingsTabBarController: BackgroundStyleDelegate {
     func changeBackgroundStyle(index: Int) {
         setTabBarAppearance(indexColor: index)
+        currentPageStyle = index
     }
 }

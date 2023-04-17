@@ -53,9 +53,9 @@ final class BackgroundColorViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        configureScrollView()
         scrollView.setContentOffset(CGPoint(x: CGFloat(currentPageStyle) * scrollView.frame.size.width, y: 0), animated: false)
         pageControl.currentPage = currentPageStyle
+        configureScrollView()
     }
     
     //MARK: - Targets
@@ -124,11 +124,13 @@ final class BackgroundColorViewController: UIViewController {
 extension BackgroundColorViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(floorf(Float(scrollView.contentOffset.x) / Float(scrollView.frame.size.width)))
-        UserDefaults.standard.set(pageControl.currentPage, forKey: "currentStyle")
         
         delegateMainVC?.changeBackgroundStyle(index: pageControl.currentPage)
         delegateSettingVC?.changeBackgroundStyle(index: pageControl.currentPage)
         delegateGameModeVC?.changeBackgroundStyle(index: pageControl.currentPage)
         delegateSoundSettingVC?.changeBackgroundStyle(index: pageControl.currentPage)
+        
+        currentPageStyle = pageControl.currentPage
+        UserDefaults.standard.set(pageControl.currentPage, forKey: "currentStyle")
     }
 }

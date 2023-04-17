@@ -19,6 +19,10 @@
 		C073C319299F5AB200E0A2C2 /* SettingsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C318299F5AB200E0A2C2 /* SettingsTabBarController.swift */; };
 		C073C31D299F5E1A00E0A2C2 /* BackgroundColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C31C299F5E1A00E0A2C2 /* BackgroundColorViewController.swift */; };
 		C073C31F29A2865100E0A2C2 /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C073C31E29A2865100E0A2C2 /* CountdownTimer.swift */; };
+		C0CD3FDF29E7F0CE00CD020A /* SoundSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CD3FDE29E7F0CE00CD020A /* SoundSet.swift */; };
+		C0CD3FE429E8092E00CD020A /* switch2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C0CD3FE229E8092E00CD020A /* switch2.mp3 */; };
+		C0CD3FE529E8092E00CD020A /* switch1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C0CD3FE329E8092E00CD020A /* switch1.mp3 */; };
+		C0CD3FE729E80A6500CD020A /* SoundsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CD3FE629E80A6500CD020A /* SoundsManager.swift */; };
 		C0EC1AD229D49F2E00C10EBD /* SoundSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC1AD129D49F2E00C10EBD /* SoundSettingViewController.swift */; };
 		C0EC1AD929D4B1E900C10EBD /* SoundSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC1AD729D4B1E900C10EBD /* SoundSettingTableViewCell.swift */; };
 		C0EC1ADA29D4B1E900C10EBD /* SoundSettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0EC1AD829D4B1E900C10EBD /* SoundSettingTableViewCell.xib */; };
@@ -46,6 +50,10 @@
 		C073C318299F5AB200E0A2C2 /* SettingsTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabBarController.swift; sourceTree = "<group>"; };
 		C073C31C299F5E1A00E0A2C2 /* BackgroundColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundColorViewController.swift; sourceTree = "<group>"; };
 		C073C31E29A2865100E0A2C2 /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
+		C0CD3FDE29E7F0CE00CD020A /* SoundSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSet.swift; sourceTree = "<group>"; };
+		C0CD3FE229E8092E00CD020A /* switch2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = switch2.mp3; sourceTree = "<group>"; };
+		C0CD3FE329E8092E00CD020A /* switch1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = switch1.mp3; sourceTree = "<group>"; };
+		C0CD3FE629E80A6500CD020A /* SoundsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundsManager.swift; sourceTree = "<group>"; };
 		C0EC1AD129D49F2E00C10EBD /* SoundSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingViewController.swift; sourceTree = "<group>"; };
 		C0EC1AD729D4B1E900C10EBD /* SoundSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingTableViewCell.swift; sourceTree = "<group>"; };
 		C0EC1AD829D4B1E900C10EBD /* SoundSettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundSettingTableViewCell.xib; sourceTree = "<group>"; };
@@ -77,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				C073C31E29A2865100E0A2C2 /* CountdownTimer.swift */,
+				C0CD3FE629E80A6500CD020A /* SoundsManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -137,6 +146,16 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		C0CD3FE029E808E400CD020A /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				C0CD3FDE29E7F0CE00CD020A /* SoundSet.swift */,
+				C0CD3FE329E8092E00CD020A /* switch1.mp3 */,
+				C0CD3FE229E8092E00CD020A /* switch2.mp3 */,
+			);
+			path = Sound;
+			sourceTree = "<group>";
+		};
 		C0EC1AD529D4B1A300C10EBD /* SoundSettingTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +211,7 @@
 				C0F3874D2996498E00EF5B1E /* LaunchScreen.storyboard */,
 				C073C30C299E5CB100E0A2C2 /* Extenstions.swift */,
 				C0003D0429AF4D3600B3AFE8 /* ColorSet.swift */,
+				C0CD3FE029E808E400CD020A /* Sound */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -307,7 +327,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0CD3FE529E8092E00CD020A /* switch1.mp3 in Resources */,
 				C0EC1ADA29D4B1E900C10EBD /* SoundSettingTableViewCell.xib in Resources */,
+				C0CD3FE429E8092E00CD020A /* switch2.mp3 in Resources */,
 				C0F3874F2996498E00EF5B1E /* LaunchScreen.storyboard in Resources */,
 				C05E94AF29AB3F8B00C1DEE4 /* TimeModeCollectionViewCell.xib in Resources */,
 				C0F3874C2996498E00EF5B1E /* Assets.xcassets in Resources */,
@@ -328,10 +350,12 @@
 				C05E94AE29AB3F8B00C1DEE4 /* TimeModeCollectionViewCell.swift in Sources */,
 				C05E94B129AB468A00C1DEE4 /* GameModeViewController.swift in Sources */,
 				C0F387472996498C00EF5B1E /* MainViewController.swift in Sources */,
+				C0CD3FE729E80A6500CD020A /* SoundsManager.swift in Sources */,
 				C0F387612999717300EF5B1E /* MainViewPresenter.swift in Sources */,
 				C0713F81299D58F100C11A92 /* MainModel.swift in Sources */,
 				C0EC1ADC29D4B91900C10EBD /* SoundSettingPresenter.swift in Sources */,
 				C073C31D299F5E1A00E0A2C2 /* BackgroundColorViewController.swift in Sources */,
+				C0CD3FDF29E7F0CE00CD020A /* SoundSet.swift in Sources */,
 				C0F387432996498C00EF5B1E /* AppDelegate.swift in Sources */,
 				C05E94B329AB667D00C1DEE4 /* TimeModel.swift in Sources */,
 				C073C313299E850500E0A2C2 /* SettingsBuilder.swift in Sources */,
