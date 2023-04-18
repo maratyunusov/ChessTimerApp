@@ -59,9 +59,8 @@ extension SoundSettingViewController: UITableViewDataSource, UITableViewDelegate
         
         let switchView = UISwitch(frame: .zero)
         switchView.setOn(array[indexPath.row].value, animated: true)
-        switchView.tag = indexPath.row
+        switchView.tag = indexPath.section
         switchView.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
-        
         cell.accessoryView = switchView
         
         return cell
@@ -70,7 +69,16 @@ extension SoundSettingViewController: UITableViewDataSource, UITableViewDelegate
     @objc func switchChanged(_ sender: UISwitch) {
         if sender.tag == 0 {
             sender.isOn ? presenter?.soundMode(isOn: true) : presenter?.soundMode(isOn: false)
+        } else if sender.tag == 1 {
+            sender.isOn ? presenter?.vibrationMode(isOn: true) : presenter?.vibrationMode(isOn: false)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        print(section, row)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -95,13 +103,6 @@ extension SoundSettingViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let section = indexPath.section
-        let row = indexPath.row
-        
-        presenter?.didSelectCell(section: section, row: row)
     }
 }
 
