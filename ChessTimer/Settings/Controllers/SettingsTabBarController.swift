@@ -11,6 +11,7 @@ final class SettingsTabBarController: UITabBarController {
     
     let gameModeVC = GameModeViewController()
     let backgroundColorVC = BackgroundColorViewController()
+    let soundSettingVC = SoundSettingViewController()
     
     let notificationCenter = NotificationCenter.default
     
@@ -19,10 +20,13 @@ final class SettingsTabBarController: UITabBarController {
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationCenter.addObserver(self, selector: #selector(changeColor), name: .changeThemeColorNotification, object: nil)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
         setupTabs()
         setTabBarAppearance(indexColor: currentPageStyle)
-        
-        notificationCenter.addObserver(self, selector: #selector(changeColor), name: .changeThemeColorNotification, object: nil)
     }
     
     @objc func changeColor(notification: Notification) {
@@ -38,7 +42,10 @@ final class SettingsTabBarController: UITabBarController {
                                       image: UIImage(systemName: "hare")),
                            generateVC(backgroundColorVC,
                                       title: "Style",
-                                      image: UIImage(systemName: "paintpalette"))
+                                      image: UIImage(systemName: "paintpalette")),
+                           generateVC(soundSettingVC,
+                                      title: "Sound",
+                                      image: UIImage(systemName: "speaker.wave.3"))
         ]
     }
     
@@ -49,41 +56,35 @@ final class SettingsTabBarController: UITabBarController {
     }
     
     private func setTabBarAppearance(indexColor: Int) {
-        let positionOnX: CGFloat = 10
-        let positionOnY: CGFloat = 10
-        let width = tabBar.bounds.width - positionOnX * 2
-        let height = tabBar.bounds.height + positionOnY * 2
-        
-        let roundLayer = CAShapeLayer()
-        
-        let bezierPath = UIBezierPath(roundedRect: CGRect(x: positionOnX,
-                                                          y: tabBar.bounds.minY - positionOnY,
-                                                          width: width,
-                                                          height: height),
-                                      cornerRadius: height / 2
-        )
-        roundLayer.path = bezierPath.cgPath
-        tabBar.layer.insertSublayer(roundLayer, at: 0)
-        tabBar.itemWidth = width / 5
-        tabBar.itemPositioning = .centered
+        let setCornerRadiusTabBar = tabBar.frame.height / 2
         
         switch indexColor {
         case 0:
-            roundLayer.fillColor = ColorSet.classic2.cgColor
+            tabBar.backgroundColor = ColorSet.classic2
             tabBar.tintColor = .white
             tabBar.unselectedItemTintColor = .mainWhite
             tabBar.barTintColor = .clear
+            tabBar.layer.cornerRadius = setCornerRadiusTabBar
         case 1:
-            roundLayer.fillColor = ColorSet.styleOne2.cgColor
+            tabBar.backgroundColor = ColorSet.styleOne2
             tabBar.tintColor = .white
             tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8374214172, green: 0.8374213576, blue: 0.8374213576, alpha: 1)
             tabBar.barTintColor = .clear
+            tabBar.layer.cornerRadius = setCornerRadiusTabBar
         case 2:
-            roundLayer.fillColor = ColorSet.styleTwo2.cgColor
+            tabBar.backgroundColor = ColorSet.styleTwo2
             tabBar.tintColor = .white
             tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8374214172, green: 0.8374213576, blue: 0.8374213576, alpha: 1)
             tabBar.barTintColor = .clear
+            tabBar.layer.cornerRadius = setCornerRadiusTabBar
         default: break
         }
+    }
+}
+
+extension SettingsTabBarController: BackgroundStyleDelegate {
+    func changeBackgroundStyle(index: Int) {
+        setTabBarAppearance(indexColor: index)
+        currentPageStyle = index
     }
 }

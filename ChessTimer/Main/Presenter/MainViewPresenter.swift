@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AudioToolbox
 
 protocol MainViewPresenterProtocol: AnyObject {
     func setTime(firstPlayerTimer: Double, secondPlayerTimer: Double)
@@ -61,12 +62,15 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
         
         if first == 0 {
             mainView?.gameOver(isFirst: true)
+            SoundsManager.shared.endGameSound()
         } else if second == 0 {
             mainView?.gameOver(isFirst: false)
+            SoundsManager.shared.endGameSound()
         }
     }
     
     func restart() {
+        time = (UserDefaults.standard.double(forKey: "time"), UserDefaults.standard.double(forKey: "time"))
         firstPlayerCountdownTimer.duration = time.0
         secondPlayerCountdownTimer.duration = time.1
         mainView?.updateTimerPlayer(first: time.0, second: time.1)

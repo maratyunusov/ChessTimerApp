@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import AudioToolbox
 
 protocol MainViewProtocol: AnyObject {
     func setChooseTimerMode(time: Double)
+    func setupTimers()
     func saveTimers()
+    func cancelTimers()
     func didStartTimer()
     func updateTimerPlayer(first: Double, second: Double)
     func gameOver(isFirst: Bool)
@@ -25,6 +28,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     
     var mainPresenter: MainViewPresenterProtocol?
     
+    private var activityUsers: Int = 0
     private var start: Bool = false
     private var currentTime: Double = 0.0
     fileprivate var currentStyle: PlayerSideColor = .classic
@@ -127,19 +131,37 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
         }
     }
     
+    func setupTimers() {
+        settingButton.isHidden = true
+        activityUsers += 1
+    }
+    
     func saveTimers() {
         mainPresenter?.setTime(firstPlayerTimer: firstPlayerSideView.time,
                                secondPlayerTimer: secondPlayerSideView.time)
+        activityUsers -= 1
+        if activityUsers == 0 {
+            settingButton.isHidden = false
+        }
+    }
+    
+    func cancelTimers() {
+        activityUsers -= 1
+        if activityUsers == 0 {
+            settingButton.isHidden = false
+        }
     }
     
     func setChooseTimerMode(time: Double) {
-        firstPlayerSideView.time = time
-        secondPlayerSideView.time = time
-        mainPresenter?.setTime(firstPlayerTimer: time, secondPlayerTimer: time)
-        currentTime = time
-        
-        changePlayerSideColor(style: currentStyle)
-        restartGameUpdateUI()
+        if !start {
+            firstPlayerSideView.time = time
+            secondPlayerSideView.time = time
+            mainPresenter?.setTime(firstPlayerTimer: time, secondPlayerTimer: time)
+            currentTime = time
+            
+            changePlayerSideColor(style: currentStyle)
+            restartGameUpdateUI()
+        }
     }
     
     func updateTimerPlayer(first: Double, second: Double) {
@@ -199,8 +221,13 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     
     @objc private func tapSettingButton() {
         guard let settingsVC = SettingsBuilder.build() as? SettingsTabBarController else { return }
+        
         settingsVC.gameModeVC.delegate = self
-        settingsVC.backgroundColorVC.delegate = self
+        settingsVC.backgroundColorVC.delegateMainVC = self
+        settingsVC.backgroundColorVC.delegateSettingVC = settingsVC
+        settingsVC.backgroundColorVC.delegateGameModeVC = settingsVC.gameModeVC
+        settingsVC.backgroundColorVC.delegateSoundSettingVC = settingsVC.soundSettingVC
+        
         settingsVC.modalTransitionStyle = .flipHorizontal
         present(settingsVC, animated: true)
     }
@@ -212,6 +239,22 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     }
     
     @objc private func firstPlayerTap() {
+        didPlayerTapped(isTimer: true)
+        DispatchQueue.main.async {
+            SoundsManager.shared.playSwitchPlayer(url: SoundSet.switchPlayers1)
+        }
+        
+    }
+    
+    @objc private func secondPlayerTap() {
+        didPlayerTapped(isTimer: false)
+        DispatchQueue.main.async {
+            SoundsManager.shared.playSwitchPlayer(url: SoundSet.switchPlayers2)
+        }
+        
+    }
+    
+    private func didPlayerTapped(isTimer: Bool) {
         if secondPlayerSideView.isActivePicker == false && firstPlayerSideView.isActivePicker == false {
             firstPlayerSideView.setupTimeButton.isHidden = true
             secondPlayerSideView.setupTimeButton.isHidden = true
@@ -221,23 +264,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
             settingButton.isHidden = true
             restartButton.isHidden = true
             isHiddenPauseButton = false
-            isTimerDidStart = true
-            
-            didStartTimer()
-        }
-    }
-    
-    @objc private func secondPlayerTap() {
-        if firstPlayerSideView.isActivePicker == false && secondPlayerSideView.isActivePicker == false {
-            firstPlayerSideView.setupTimeButton.isHidden = true
-            secondPlayerSideView.setupTimeButton.isHidden = true
-            firstPlayerSideView.tapStartLabel.isHidden = true
-            secondPlayerSideView.tapStartLabel.isHidden = true
-            pauseButton.isHidden = false
-            settingButton.isHidden = true
-            restartButton.isHidden = true
-            isHiddenPauseButton = false
-            isTimerDidStart = false
+            isTimerDidStart = isTimer
             
             didStartTimer()
         }

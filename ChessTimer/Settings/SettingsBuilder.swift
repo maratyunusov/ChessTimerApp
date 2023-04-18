@@ -10,8 +10,6 @@ import UIKit
 final class SettingsBuilder {
         static func build() -> UIViewController {
             let settingsViewController = SettingsTabBarController()
-//            let mainPresenter = MainViewPresenter(mainView: mainViewController)
-//            mainViewController.mainPresenter = mainPresenter
             return settingsViewController
     }
 }

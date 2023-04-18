@@ -16,8 +16,8 @@ final class CountdownTimer {
     
     weak var delegate: CountdownTimerDelegate?
     
-    public var seconds: Double = 300.0
-    public var duration: Double = 300.0
+    public var seconds: Double = 600.0
+    public var duration: Double = 600.0
     
     private var counterTimer: Int = 0
     
