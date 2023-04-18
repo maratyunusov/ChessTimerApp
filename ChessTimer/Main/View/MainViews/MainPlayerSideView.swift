@@ -24,7 +24,7 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
     
     public var isActivePicker = false
     
-    var time: Double = 300 {
+    var time: Double = 600 {
         didSet {
             let hours = Int(time) / 3600
             let minutes = Int(time) / 60 % 60
@@ -148,6 +148,8 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         stackViewChoosesButtons.isHidden = false
         setupTimeButton.isHidden = true
         titlePickerStackView.isHidden = false
+        
+        delegate?.setupTimers()
     }
     
     @objc private func saveTapped() {
@@ -175,6 +177,8 @@ final class MainPlayerSideView: UIView, MainPlayerSideViewProtocol {
         timerPickerView.isHidden = true
         stackViewChoosesButtons.isHidden = true
         titlePickerStackView.isHidden = true
+        
+        delegate?.cancelTimers()
     }
     
     private func addConstraints() {
