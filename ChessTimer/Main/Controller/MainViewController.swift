@@ -10,7 +10,9 @@ import AudioToolbox
 
 protocol MainViewProtocol: AnyObject {
     func setChooseTimerMode(time: Double)
+    func setupTimers()
     func saveTimers()
+    func cancelTimers()
     func didStartTimer()
     func updateTimerPlayer(first: Double, second: Double)
     func gameOver(isFirst: Bool)
@@ -26,6 +28,7 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
     
     var mainPresenter: MainViewPresenterProtocol?
     
+    private var activityUsers: Int = 0
     private var start: Bool = false
     private var currentTime: Double = 0.0
     fileprivate var currentStyle: PlayerSideColor = .classic
@@ -128,9 +131,25 @@ final class MainViewController: UIViewController, MainViewProtocol, BackgroundSt
         }
     }
     
+    func setupTimers() {
+        settingButton.isHidden = true
+        activityUsers += 1
+    }
+    
     func saveTimers() {
         mainPresenter?.setTime(firstPlayerTimer: firstPlayerSideView.time,
                                secondPlayerTimer: secondPlayerSideView.time)
+        activityUsers -= 1
+        if activityUsers == 0 {
+            settingButton.isHidden = false
+        }
+    }
+    
+    func cancelTimers() {
+        activityUsers -= 1
+        if activityUsers == 0 {
+            settingButton.isHidden = false
+        }
     }
     
     func setChooseTimerMode(time: Double) {

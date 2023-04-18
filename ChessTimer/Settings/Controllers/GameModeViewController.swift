@@ -24,7 +24,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
                                           TimeModel(description: "Bullet", time: "1")
     ]
     
-    private var lastIndexActive: IndexPath = [0,0]
+    private var lastIndexActive: IndexPath = [0,3]
     
     private var collectionView: UICollectionView?
     
@@ -115,7 +115,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
                               time: timeModes[indexPath.row].time)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeModeCollectionViewCell.cellIdentifier, for: indexPath) as? TimeModeCollectionViewCell else { return UICollectionViewCell()}
         cell.configureCell(model: model)
-        if indexPath == lastIndexActive {
+        if indexPath.row == lastIndexActive.row {
             cell.layer.borderColor = activeCellColor.cgColor
             cell.layer.borderWidth = 10
             cell.timeLabel.textColor = .tabBarItemAccent
@@ -127,14 +127,14 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
     
     //MARK: - Delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("lastIndexActive - \(lastIndexActive)")
+        print("lastIndexActive - \(lastIndexActive.row)")
         print(indexPath)
         
         if let time = Double(timeModes[indexPath.row].time) {
             self.time = time * 60
         }
         
-        if lastIndexActive != indexPath {
+        if lastIndexActive.row != indexPath.row {
             
             //activeCel
             guard let activeCell = collectionView.cellForItem(at: indexPath) as? TimeModeCollectionViewCell else { return }
@@ -154,7 +154,7 @@ final class GameModeViewController: UIViewController, UICollectionViewDelegate, 
             inActiveCell.timeLabel.textColor = .tabBarItemAccent
             inActiveCell.minutesTextLabel.textColor = .tabBarItemAccent
             inActiveCell.descriptionLabel.textColor = .tabBarItemAccent
-            lastIndexActive = indexPath
+            lastIndexActive.row = indexPath.row
         }
     }
 }

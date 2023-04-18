@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(true, forKey: "soundIsOn")
             UserDefaults.standard.set(false, forKey: "timeLeftWarning")
             UserDefaults.standard.set(true, forKey: "vibrationIsOn")
+            UserDefaults.standard.setValue(600, forKey: "time")
+            UserDefaults.standard.setValue(3, forKey: "indexPathRow")
         }
         
         return true
