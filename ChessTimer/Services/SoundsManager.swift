@@ -7,12 +7,12 @@
 
 import Foundation
 import AVFoundation
+import UIKit
 
 struct SoundsManager {
     static var shared = SoundsManager()
     
     var isSoundsON: Bool = UserDefaults.standard.bool(forKey: "soundIsOn")
-    var isVibrationON: Bool = UserDefaults.standard.bool(forKey: "vibrationIsOn")
     
     var player: AVAudioPlayer?
     
@@ -27,20 +27,13 @@ struct SoundsManager {
         }
     }
     
+    func successSound() {
+        AudioServicesPlaySystemSound(SystemSoundID(1114))
+    }
+    
     func endGameSound() {
-        let endGameSound = SystemSoundID(1260)
         if isSoundsON {
-            AudioServicesPlaySystemSound(endGameSound)
+            AudioServicesPlaySystemSound(SystemSoundID(1260))
         }
     }
-    
-    func endGameVibration() {
-        let endGameVibration = SystemSoundID(kSystemSoundID_Vibrate)
-        if isVibrationON {
-            AudioServicesPlaySystemSound(endGameVibration)
-        }
-    }
-    
-    
-    
 }

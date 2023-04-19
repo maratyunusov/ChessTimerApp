@@ -63,11 +63,11 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
         if first == 0 {
             mainView?.gameOver(isFirst: true)
             SoundsManager.shared.endGameSound()
-            SoundsManager.shared.endGameVibration()
+            HapticManager.shared.endGameVibration()
         } else if second == 0 {
             mainView?.gameOver(isFirst: false)
             SoundsManager.shared.endGameSound()
-            SoundsManager.shared.endGameVibration()
+            HapticManager.shared.endGameVibration()
         }
     }
     

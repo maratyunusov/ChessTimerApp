@@ -46,6 +46,8 @@ final class SoundSettingPresenter: SoundSettingProtocol {
         
         if isOn {
             soundsIsOn = true
+            SoundsManager.shared.successSound()
+            HapticManager.shared.notification(type: .success)
         } else {
             soundsIsOn = false
         }
@@ -56,10 +58,11 @@ final class SoundSettingPresenter: SoundSettingProtocol {
     }
     
     func vibrationMode(isOn: Bool) {
-        SoundsManager.shared.isVibrationON = isOn
+        HapticManager.shared.isVibrationON = isOn
         
         if isOn {
             vibrationIsOn = true
+            HapticManager.shared.notification(type: .success)
         } else {
             vibrationIsOn = false
         }
