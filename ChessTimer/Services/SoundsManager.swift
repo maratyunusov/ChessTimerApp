@@ -7,6 +7,7 @@
 
 import Foundation
 import AVFoundation
+import UIKit
 
 struct SoundsManager {
     static var shared = SoundsManager()
@@ -26,13 +27,13 @@ struct SoundsManager {
         }
     }
     
-    func endGameSound() {
-        let endGameSound = SystemSoundID(1260)
-        if isSoundsON {
-            AudioServicesPlaySystemSound(endGameSound)
-        }
+    func successSound() {
+        AudioServicesPlaySystemSound(SystemSoundID(1114))
     }
     
-    
-    
+    func endGameSound() {
+        if isSoundsON {
+            AudioServicesPlaySystemSound(SystemSoundID(1260))
+        }
+    }
 }

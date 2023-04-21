@@ -13,12 +13,11 @@ class SoundSettingTableViewCell: UITableViewCell {
     private var currentPageStyle: Int?
 
     @IBOutlet weak var nameLabel: UILabel!
-    //@IBOutlet weak var switchMode: UISwitch!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         nameLabel.font = .systemFont(ofSize: 25, weight: .light)
-        //switchMode.addTarget(self, action: #selector(switchModed), for: .valueChanged)
+        selectionStyle = .none
     }
     
     //MARK: - Layout subviews
@@ -27,11 +26,6 @@ class SoundSettingTableViewCell: UITableViewCell {
         currentPageStyle = UserDefaults.standard.integer(forKey: "currentStyle")
         setupColor()
     }
-    
-//    @objc func switchModed(sender: UISwitch) {
-//        
-//        print(sender.isOn)
-//    }
     
     func configure(name: String) {
         nameLabel.text = name

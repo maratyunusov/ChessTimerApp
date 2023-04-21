@@ -27,6 +27,7 @@
 		C0EC1AD929D4B1E900C10EBD /* SoundSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC1AD729D4B1E900C10EBD /* SoundSettingTableViewCell.swift */; };
 		C0EC1ADA29D4B1E900C10EBD /* SoundSettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0EC1AD829D4B1E900C10EBD /* SoundSettingTableViewCell.xib */; };
 		C0EC1ADC29D4B91900C10EBD /* SoundSettingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EC1ADB29D4B91900C10EBD /* SoundSettingPresenter.swift */; };
+		C0EEBB6529EFD244003472EA /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EEBB6429EFD244003472EA /* HapticManager.swift */; };
 		C0F387432996498C00EF5B1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387422996498C00EF5B1E /* AppDelegate.swift */; };
 		C0F387452996498C00EF5B1E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387442996498C00EF5B1E /* SceneDelegate.swift */; };
 		C0F387472996498C00EF5B1E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F387462996498C00EF5B1E /* MainViewController.swift */; };
@@ -58,6 +59,7 @@
 		C0EC1AD729D4B1E900C10EBD /* SoundSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingTableViewCell.swift; sourceTree = "<group>"; };
 		C0EC1AD829D4B1E900C10EBD /* SoundSettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SoundSettingTableViewCell.xib; sourceTree = "<group>"; };
 		C0EC1ADB29D4B91900C10EBD /* SoundSettingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingPresenter.swift; sourceTree = "<group>"; };
+		C0EEBB6429EFD244003472EA /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		C0F3873F2996498C00EF5B1E /* ChessTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0F387422996498C00EF5B1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F387442996498C00EF5B1E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			children = (
 				C073C31E29A2865100E0A2C2 /* CountdownTimer.swift */,
 				C0CD3FE629E80A6500CD020A /* SoundsManager.swift */,
+				C0EEBB6429EFD244003472EA /* HapticManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				C05E94B329AB667D00C1DEE4 /* TimeModel.swift in Sources */,
 				C073C313299E850500E0A2C2 /* SettingsBuilder.swift in Sources */,
 				C0F3875F29981F2100EF5B1E /* TimerSetupView.swift in Sources */,
+				C0EEBB6529EFD244003472EA /* HapticManager.swift in Sources */,
 				C0EC1AD929D4B1E900C10EBD /* SoundSettingTableViewCell.swift in Sources */,
 				C073C30D299E5CB100E0A2C2 /* Extenstions.swift in Sources */,
 				C0F387452996498C00EF5B1E /* SceneDelegate.swift in Sources */,

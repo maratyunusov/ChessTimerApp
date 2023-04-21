@@ -61,12 +61,16 @@ final class MainViewPresenter: MainViewPresenterProtocol, CountdownTimerDelegate
         mainView?.updateTimerPlayer(first: first, second: second)
         
         if first == 0 {
-            mainView?.gameOver(isFirst: true)
-            SoundsManager.shared.endGameSound()
+            endGame(timeIsOver: true)
         } else if second == 0 {
-            mainView?.gameOver(isFirst: false)
-            SoundsManager.shared.endGameSound()
+            endGame(timeIsOver: false)
         }
+    }
+    
+    private func endGame(timeIsOver: Bool) {
+        mainView?.gameOver(isFirst: timeIsOver)
+        SoundsManager.shared.endGameSound()
+        HapticManager.shared.endGameVibration()
     }
     
     func restart() {
