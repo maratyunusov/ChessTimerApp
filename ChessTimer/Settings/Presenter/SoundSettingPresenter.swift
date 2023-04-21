@@ -21,13 +21,11 @@ final class SoundSettingPresenter: SoundSettingProtocol {
     public var content: [[String: Bool]] = [[:]]
     
     private var soundsIsOn: Bool
-    //private var timeLeftWarning: Bool
     private var vibrationIsOn: Bool
     
     init(view: SoundSettingViewProtocol) {
         self.view = view
         self.soundsIsOn = UserDefaults.standard.bool(forKey: "soundIsOn")
-        //self.timeLeftWarning = UserDefaults.standard.bool(forKey: "timeLeftWarning")
         self.vibrationIsOn = UserDefaults.standard.bool(forKey: "vibrationIsOn")
         
         content = [["Sound": soundsIsOn],

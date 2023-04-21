@@ -23,7 +23,7 @@ struct HapticManager {
         generator.impactOccurred()
     }
     
-    func defaultVibrate() {
+    private func defaultVibrate() {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate)) 
     }
     
