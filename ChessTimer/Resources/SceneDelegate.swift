@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
         
-        UserDefaults.standard.set(true, forKey: "isFirstStart")
+        UserDefaults.standard.set(false, forKey: "isFirstStart")
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

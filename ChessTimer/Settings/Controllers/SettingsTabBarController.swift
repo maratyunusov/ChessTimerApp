@@ -21,14 +21,11 @@ final class SettingsTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         notificationCenter.addObserver(self, selector: #selector(changeColor), name: .changeThemeColorNotification, object: nil)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        
+
         setupTabs()
         setTabBarAppearance(indexColor: currentPageStyle)
     }
-    
+
     @objc func changeColor(notification: Notification) {
         guard let userInfo = notification.userInfo as? [String: Int] else { return }
         guard let indexColor = userInfo["index"] else { return }
