@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let firstStart: Bool = UserDefaults.standard.bool(forKey: "isFirstStart")
         
-        if !firstStart {
+        if firstStart {
             UserDefaults.standard.set(true, forKey: "soundIsOn")
             UserDefaults.standard.set(true, forKey: "vibrationIsOn")
             UserDefaults.standard.setValue(600, forKey: "time")
